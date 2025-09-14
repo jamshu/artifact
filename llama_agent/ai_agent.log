@@ -1,0 +1,17 @@
+2025-09-14 09:48:36,747 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-09-14 09:57:50,332 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-09-14 09:59:16,293 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-09-14 10:00:30,607 - ERROR - Error reading file A module that was compiled using NumPy 1.x cannot be run in: [Errno 2] No such file or directory: 'A module that was compiled using NumPy 1.x cannot be run in'
+2025-09-14 10:00:30,610 - INFO - HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 404 Not Found"
+2025-09-14 10:00:30,611 - ERROR - Search error: model "gpt-oss" not found, try pulling it first (status code: 404)
+2025-09-14 10:00:30,614 - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 404 Not Found"
+2025-09-14 10:00:30,614 - ERROR - Error generating documentation: model 'gpt-oss' not found (status code: 404)
+2025-09-14 10:00:59,472 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-09-14 10:01:03,911 - INFO - HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 404 Not Found"
+2025-09-14 10:01:03,912 - ERROR - Search error: model "gpt-oss" not found, try pulling it first (status code: 404)
+2025-09-14 10:01:03,915 - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 404 Not Found"
+2025-09-14 10:01:03,916 - ERROR - Error generating documentation: model 'gpt-oss' not found (status code: 404)
+2025-09-14 10:01:47,320 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-09-14 10:02:08,250 - INFO - HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 500 Internal Server Error"
+2025-09-14 10:02:08,250 - ERROR - Search error: this model does not support embeddings (status code: 500)
+2025-09-14 10:02:57,748 - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
