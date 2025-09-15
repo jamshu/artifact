@@ -228,7 +228,7 @@ class VectorStore:
         self.client = chromadb.PersistentClient(path=config.chroma_db_path)
         self.collection = self.client.get_or_create_collection("code_repository")
         self.embeddings = OllamaEmbeddings(
-            model=config.ollama_model,
+            model="nomic-embed-text",
             base_url=config.ollama_url
         )
         self.text_splitter = RecursiveCharacterTextSplitter(
@@ -401,7 +401,7 @@ Format the documentation in Markdown.
                 requirements=requirements
             )
             
-            refactored_code = self.llm(prompt)
+            refactored_code = self.llm.invoke(prompt)
             
             # Create backup and write refactored code
             backup_path = self.file_manager.create_backup(file_path)
@@ -448,7 +448,7 @@ Format the documentation in Markdown.
                     context=context
                 )
                 
-                documentation = self.llm(prompt)
+                documentation = self.llm.invoke(prompt)
                 doc_path = f"docs/{file_path.replace('/', '_')}.md"
                 
                 success = self.file_manager.write_file(doc_path, documentation)
@@ -641,7 +641,7 @@ def main():
     
     # Configuration
     config = AgentConfig(
-        ollama_model="gpt-oss:20b",  # Change to your model
+        ollama_model="llama3.2",  # Using llama3.2 for text generation
         repository_path="./",   # Change to your repo path
         chroma_db_path="./chroma_db"
     )

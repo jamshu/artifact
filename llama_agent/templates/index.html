@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Odoo Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <style>
+        .loading { opacity: 0.5; pointer-events: none; }
+    </style>
+</head>
+<body class="bg-gray-50" x-data="odooAgent()" x-init="init()">
+    <div class="container mx-auto px-4 py-8">
+        
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h1 class="text-3xl font-bold text-blue-600 mb-2">🤖 Gemini-Powered Odoo Agent</h1>
+            <p class="text-gray-600">Advanced AI assistant for Odoo 16 development with interactive diff approval</p>
+            
+            <!-- Configuration Status -->
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-green-50 border border-green-200 rounded p-3">
+                    <span class="text-green-600 font-medium">✅ Gemini API Connected</span>
+                </div>
+                <div class="bg-blue-50 border border-blue-200 rounded p-3">
+                    <span class="text-blue-600 font-medium" x-text="'📦 Odoo ' + (config.odoo_version || 'Loading...')"></span>
+                </div>
+                <div class="bg-purple-50 border border-purple-200 rounded p-3">
+                    <span class="text-purple-600 font-medium" x-text="'📁 ' + modules.length + ' modules'"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Tabs -->
+        <div class="bg-white rounded-lg shadow-md">
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex space-x-8 px-6">
+                    <button @click="activeTab = 'analyze'" 
+                            :class="activeTab === 'analyze' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm hover:text-gray-700">
+                        📊 Analyze Code
+                    </button>
+                    <button @click="activeTab = 'create'" 
+                            :class="activeTab === 'create' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm hover:text-gray-700">
+                        🔧 Create Module
+                    </button>
+                    <button @click="activeTab = 'customize'" 
+                            :class="activeTab === 'customize' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm hover:text-gray-700">
+                        ⚙️ Customize Module
+                    </button>
+                    <button @click="activeTab = 'debug'" 
+                            :class="activeTab === 'debug' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm hover:text-gray-700">
+                        🐛 Debug Issue
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="p-6">
+                
+                <!-- Analyze Tab -->
+                <div x-show="activeTab === 'analyze'" class="space-y-4">
+                    <h2 class="text-xl font-semibold mb-4">📊 Code Analysis</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">File Path to Analyze</label>
+                            <input type="text" x-model="analyzeFile" 
+                                   placeholder="e.g., models/product_template.py"
+                                   class="w-full border border-gray-300 rounded-md px-3 py-2 mb-4">
+                            
+                            <button @click="analyzeCode()" 
+                                    :disabled="!analyzeFile || loading.analyze"
+                                    class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 disabled:opacity-50">
+                                <span x-show="!loading.analyze">🔍 Analyze Code</span>
+                                <span x-show="loading.analyze">🔄 Analyzing...</span>
+                            </button>
+                        </div>
+                        
+                        <div x-show="analysisResult" class="bg-gray-50 rounded-lg p-4">
+                            <h3 class="font-medium mb-2">Analysis Result</h3>
+                            <div class="prose prose-sm max-w-none whitespace-pre-wrap" x-html="analysisResult"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Create Module Tab -->
+                <div x-show="activeTab === 'create'" class="space-y-4">
+                    <h2 class="text-xl font-semibold mb-4">🔧 Create New Module</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Module Name</label>
+                                <input type="text" x-model="newModule.module_name" 
+                                       placeholder="e.g., inventory_alerts"
+                                       class="w-full border border-gray-300 rounded-md px-3 py-2">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                <input type="text" x-model="newModule.description" 
+                                       placeholder="Brief description of the module"
+                                       class="w-full border border-gray-300 rounded-md px-3 py-2">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Features</label>
+                                <textarea x-model="newModule.features" rows="4"
+                                         placeholder="List the main features and functionality"
+                                         class="w-full border border-gray-300 rounded-md px-3 py-2"></textarea>
+                            </div>
+                            
+                            <button @click="createModule()" 
+                                    :disabled="!newModule.module_name || !newModule.description || !newModule.features || loading.create"
+                                    class="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 disabled:opacity-50">
+                                <span x-show="!loading.create">🚀 Create Module</span>
+                                <span x-show="loading.create">🔄 Creating...</span>
+                            </button>
+                        </div>
+                        
+                        <div x-show="createResult" class="bg-green-50 border border-green-200 rounded-lg p-4">
+                            <h3 class="font-medium text-green-800 mb-2">✅ Module Created Successfully</h3>
+                            <p class="text-green-700" x-text="createResult"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customize Module Tab -->
+                <div x-show="activeTab === 'customize'" class="space-y-4">
+                    <h2 class="text-xl font-semibold mb-4">⚙️ Customize Module</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Select Module</label>
+                                <select x-model="customizeModule.module_path" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                    <option value="">Choose a module...</option>
+                                    <template x-for="module in modules" :key="module.name">
+                                        <option :value="module.path" x-text="module.name"></option>
+                                    </template>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Customization Request</label>
+                                <textarea x-model="customizeModule.customization_request" rows="6"
+                                         placeholder="Describe what you want to customize or add to the module"
+                                         class="w-full border border-gray-300 rounded-md px-3 py-2"></textarea>
+                            </div>
+                            
+                            <button @click="customizeModuleAction()" 
+                                    :disabled="!customizeModule.module_path || !customizeModule.customization_request || loading.customize"
+                                    class="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700 disabled:opacity-50">
+                                <span x-show="!loading.customize">⚡ Customize Module</span>
+                                <span x-show="loading.customize">🔄 Customizing...</span>
+                            </button>
+                        </div>
+                        
+                        <div x-show="customizeResult" class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                            <h3 class="font-medium text-purple-800 mb-2">✅ Customization Completed</h3>
+                            <div class="text-purple-700 whitespace-pre-wrap" x-html="customizeResult"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Debug Tab -->
+                <div x-show="activeTab === 'debug'" class="space-y-4">
+                    <h2 class="text-xl font-semibold mb-4">🐛 Debug Odoo Issue</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Error Message</label>
+                                <textarea x-model="debugIssue.error_message" rows="3"
+                                         placeholder="Paste the error message here"
+                                         class="w-full border border-gray-300 rounded-md px-3 py-2"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Code Context</label>
+                                <textarea x-model="debugIssue.code_context" rows="6"
+                                         placeholder="Provide relevant code context"
+                                         class="w-full border border-gray-300 rounded-md px-3 py-2"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Module Path (optional)</label>
+                                <select x-model="debugIssue.module_path" class="w-full border border-gray-300 rounded-md px-3 py-2">
+                                    <option value="">No specific module</option>
+                                    <template x-for="module in modules" :key="module.name">
+                                        <option :value="module.path" x-text="module.name"></option>
+                                    </template>
+                                </select>
+                            </div>
+                            
+                            <button @click="debugIssueAction()" 
+                                    :disabled="!debugIssue.error_message || !debugIssue.code_context || loading.debug"
+                                    class="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 disabled:opacity-50">
+                                <span x-show="!loading.debug">🔍 Debug Issue</span>
+                                <span x-show="loading.debug">🔄 Debugging...</span>
+                            </button>
+                        </div>
+                        
+                        <div x-show="debugResult" class="bg-red-50 border border-red-200 rounded-lg p-4">
+                            <h3 class="font-medium text-red-800 mb-2">🔍 Debug Analysis</h3>
+                            <div class="text-red-700 prose prose-sm max-w-none whitespace-pre-wrap" x-html="debugResult"></div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function odooAgent() {
+            return {
+                activeTab: 'create',
+                config: {},
+                modules: [],
+                
+                analyzeFile: '',
+                analysisResult: '',
+                
+                newModule: {
+                    module_name: '',
+                    description: '',
+                    features: ''
+                },
+                createResult: '',
+                
+                customizeModule: {
+                    module_path: '',
+                    customization_request: ''
+                },
+                customizeResult: '',
+                
+                debugIssue: {
+                    error_message: '',
+                    code_context: '',
+                    module_path: ''
+                },
+                debugResult: '',
+                
+                loading: {
+                    analyze: false,
+                    create: false,
+                    customize: false,
+                    debug: false
+                },
+                
+                async init() {
+                    await this.loadConfig();
+                    await this.loadModules();
+                },
+                
+                async loadConfig() {
+                    try {
+                        const response = await fetch('/api/config');
+                        this.config = await response.json();
+                    } catch (error) {
+                        console.error('Error loading config:', error);
+                        this.config = { odoo_version: 'Error loading' };
+                    }
+                },
+                
+                async loadModules() {
+                    try {
+                        const response = await fetch('/api/list-modules');
+                        const data = await response.json();
+                        this.modules = data.modules || [];
+                    } catch (error) {
+                        console.error('Error loading modules:', error);
+                        this.modules = [];
+                    }
+                },
+                
+                async analyzeCode() {
+                    if (!this.analyzeFile) return;
+                    
+                    this.loading.analyze = true;
+                    this.analysisResult = '';
+                    
+                    try {
+                        const response = await fetch('/api/analyze', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ file_path: this.analyzeFile })
+                        });
+                        
+                        const result = await response.json();
+                        if (result.success) {
+                            this.analysisResult = this.markdownToHtml(result.analysis);
+                        } else {
+                            this.analysisResult = `<div class="text-red-600">Error: ${result.error}</div>`;
+                        }
+                    } catch (error) {
+                        this.analysisResult = `<div class="text-red-600">Error: ${error.message}</div>`;
+                    } finally {
+                        this.loading.analyze = false;
+                    }
+                },
+                
+                async createModule() {
+                    this.loading.create = true;
+                    this.createResult = '';
+                    
+                    try {
+                        const response = await fetch('/api/create-module', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(this.newModule)
+                        });
+                        
+                        const result = await response.json();
+                        if (result.success) {
+                            this.createResult = `Module '${result.module_name}' created at ${result.module_path}`;
+                            await this.loadModules(); // Refresh module list
+                            // Reset form
+                            this.newModule = { module_name: '', description: '', features: '' };
+                        } else {
+                            this.createResult = `Error: ${result.error || result.message}`;
+                        }
+                    } catch (error) {
+                        this.createResult = `Error: ${error.message}`;
+                    } finally {
+                        this.loading.create = false;
+                    }
+                },
+                
+                async customizeModuleAction() {
+                    this.loading.customize = true;
+                    this.customizeResult = '';
+                    
+                    try {
+                        const response = await fetch('/api/customize-module', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(this.customizeModule)
+                        });
+                        
+                        const result = await response.json();
+                        if (result.success) {
+                            this.customizeResult = `<p>Customization completed for ${result.module_path}</p>`;
+                            if (result.analysis) {
+                                this.customizeResult += `<div class="mt-2">${this.markdownToHtml(result.analysis)}</div>`;
+                            }
+                        } else {
+                            this.customizeResult = `<div class="text-red-600">Error: ${result.error || result.message}</div>`;
+                        }
+                    } catch (error) {
+                        this.customizeResult = `<div class="text-red-600">Error: ${error.message}</div>`;
+                    } finally {
+                        this.loading.customize = false;
+                    }
+                },
+                
+                async debugIssueAction() {
+                    this.loading.debug = true;
+                    this.debugResult = '';
+                    
+                    try {
+                        const response = await fetch('/api/debug', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(this.debugIssue)
+                        });
+                        
+                        const result = await response.json();
+                        if (result.success) {
+                            this.debugResult = this.markdownToHtml(result.diagnosis || result.analysis || 'Debug completed');
+                        } else {
+                            this.debugResult = `<div class="text-red-600">Error: ${result.error || result.message}</div>`;
+                        }
+                    } catch (error) {
+                        this.debugResult = `<div class="text-red-600">Error: ${error.message}</div>`;
+                    } finally {
+                        this.loading.debug = false;
+                    }
+                },
+                
+                markdownToHtml(markdown) {
+                    // Simple markdown to HTML converter
+                    return markdown
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                        .replace(/`(.*?)`/g, '<code class="bg-gray-100 px-1 rounded">$1</code>')
+                        .replace(/\n/g, '<br>');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
