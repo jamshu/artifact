@@ -1,0 +1,25 @@
+[project]
+name = "llama-agent"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "jamshu", email = "jamshu.mkd@gmail.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "flask>=3.1.2",
+    "flask-cors>=6.0.1",
+    "google-generativeai>=0.8.5",
+    "langchain>=0.3.27",
+    "langchain-anthropic>=0.3.20",
+    "langchain-core>=0.3.76",
+    "langchain-google-genai>=2.0.10",
+    "langchain-openai>=0.3.33",
+    "python-dotenv>=1.1.1",
+    "rich>=14.1.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

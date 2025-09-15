@@ -14,7 +14,7 @@ from flask import Flask, render_template, request, jsonify, send_from_directory
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-from gemini_odoo_agent import GeminiOdooAgent, FileChange
+from langchain_odoo_agent import LangChainOdooAgent, FileChange
 
 load_dotenv()
 
@@ -27,7 +27,7 @@ agent = None
 def init_agent():
     global agent
     if agent is None:
-        agent = GeminiOdooAgent()
+        agent = LangChainOdooAgent()
 
 @app.route('/')
 def index():
@@ -38,12 +38,16 @@ def index():
 def get_config():
     """Get agent configuration"""
     init_agent()
+    provider_info = agent.get_provider_info()
     return jsonify({
         'odoo_version': agent.odoo_version,
         'addons_path': str(agent.odoo_addons_path),
         'agent_mode': agent.agent_mode,
         'auto_approve': agent.auto_approve,
-        'backup_files': agent.backup_files
+        'backup_files': agent.backup_files,
+        'llm_provider': provider_info['provider'],
+        'llm_model': provider_info['model'],
+        'llm_temperature': provider_info['temperature']
     })
 
 @app.route('/api/analyze', methods=['POST'])

@@ -15,19 +15,22 @@
         
         <!-- Header -->
         <div class="bg-white rounded-lg shadow-md p-6 mb-8">
-            <h1 class="text-3xl font-bold text-blue-600 mb-2">🤖 Gemini-Powered Odoo Agent</h1>
-            <p class="text-gray-600">Advanced AI assistant for Odoo 16 development with interactive diff approval</p>
+            <h1 class="text-3xl font-bold text-blue-600 mb-2">🤖 LangChain-Powered Odoo Agent</h1>
+            <p class="text-gray-600">Advanced AI assistant for Odoo development with modular LLM support via LangChain</p>
             
             <!-- Configuration Status -->
-            <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div class="bg-green-50 border border-green-200 rounded p-3">
-                    <span class="text-green-600 font-medium">✅ Gemini API Connected</span>
+                    <span class="text-green-600 font-medium" x-text="'🤖 ' + (config.llm_provider || 'Loading...').toUpperCase()"></span>
                 </div>
                 <div class="bg-blue-50 border border-blue-200 rounded p-3">
                     <span class="text-blue-600 font-medium" x-text="'📦 Odoo ' + (config.odoo_version || 'Loading...')"></span>
                 </div>
                 <div class="bg-purple-50 border border-purple-200 rounded p-3">
                     <span class="text-purple-600 font-medium" x-text="'📁 ' + modules.length + ' modules'"></span>
+                </div>
+                <div class="bg-yellow-50 border border-yellow-200 rounded p-3">
+                    <span class="text-yellow-600 font-medium" x-text="'⚡ ' + (config.llm_model || 'Loading...')"></span>
                 </div>
             </div>
         </div>
