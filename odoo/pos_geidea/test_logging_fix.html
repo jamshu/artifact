@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Geidea Logging Client Test</title>
+</head>
+<body>
+    <h1>Geidea Logging Client Recursion Fix Test</h1>
+    <p>Open browser console to see test results...</p>
+    
+    <script>
+        // Simulate the logging client fix
+        class TestGeideaLoggingClient {
+            constructor() {
+                this.originalConsole = {
+                    log: console.log.bind(console),
+                    info: console.info.bind(console),
+                    warn: console.warn.bind(console),
+                    error: console.error.bind(console)
+                };
+                
+                this.logQueue = [];
+                this.sessionId = 'test_session_123';
+            }
+            
+            logError(component, message, data = null) {
+                if (this.originalConsole) {
+                    this.originalConsole.error(`[ERROR] ${component}: ${message}`, data);
+                }
+                this.logQueue.push({component, level: 'ERROR', message, data});
+            }
+            
+            logInfo(component, message, data = null) {
+                if (this.originalConsole) {
+                    this.originalConsole.info(`[INFO] ${component}: ${message}`, data);
+                }
+                this.logQueue.push({component, level: 'INFO', message, data});
+            }
+            
+            getSessionInfo() {
+                return {
+                    session_id: this.sessionId,
+                    queue_length: this.logQueue.length
+                };
+            }
+        }
+        
+        // Create test instance
+        const testClient = new TestGeideaLoggingClient();
+        
+        // Store original console methods
+        const originalConsoleLog = console.log;
+        const originalConsoleError = console.error;
+        
+        // Track recursion prevention
+        let isLoggingInProgress = false;
+        
+        // Override console.error with recursion prevention
+        console.error = function(...args) {
+            originalConsoleError.apply(console, args);
+            
+            if (!isLoggingInProgress) {
+                try {
+                    const message = args.join(' ');
+                    if (message.toLowerCase().includes('geidea')) {
+                        isLoggingInProgress = true;
+                        testClient.logError('console', message, { args: args });
+                    }
+                } catch (e) {
+                    // Silently ignore logging errors
+                } finally {
+                    isLoggingInProgress = false;
+                }
+            }
+        };
+        
+        // Test the fix
+        console.log('=== TESTING RECURSION FIX ===');
+        
+        // This should work without infinite recursion
+        console.error('This is a geidea related error message');
+        
+        console.log('Session info:', testClient.getSessionInfo());
+        console.log('Log queue:', testClient.logQueue);
+        
+        // Test multiple calls
+        console.error('Another geidea error 1');
+        console.error('Another geidea error 2');
+        
+        console.log('Final session info:', testClient.getSessionInfo());
+        console.log('=== TEST COMPLETED SUCCESSFULLY ===');
+    </script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+.payment-terminal-status {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    border-radius: 4px;
+
+    .message {
+        margin-left: 0.5rem;
+        font-size: 1.1em;
+    }
+
+    .terminal-status-waiting {
+        color: #2196F3;
+    }
+
+    .terminal-status-retry {
+        color: #F44336;
+        
+        .retry-button {
+            margin-top: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #F44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            
+            &:hover {
+                background: darken(#F44336, 10%);
+            }
+        }
+    }
+
+    .terminal-status-done {
+        color: #4CAF50;
+
+        .transaction-details {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 4px;
+
+            .detail-item {
+                display: flex;
+                justify-content: space-between;
+                margin: 0.25rem 0;
+
+                .label {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+.payment-terminal-button {
+    margin: 1rem 0;
+
+    .send-payment-button {
+        width: 100%;
+        padding: 1rem;
+        background: #2196F3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1.1em;
+
+        &:hover {
+            background: darken(#2196F3, 10%);
+        }
+
+        &.disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        i {
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.geidea-payment-container {
+    padding: 1rem;
+    
+    .send-to-terminal {
+        width: 100%;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background: #00a09d;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1.1em;
+        cursor: pointer;
+        
+        &:hover {
+            background: darken(#00a09d, 5%);
+        }
+        
+        &.disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        i {
+            margin-right: 0.5rem;
+        }
+    }
+    
+    .payment-status {
+        padding: 0.5rem;
+        border-radius: 4px;
+        text-align: center;
+        
+        &.waiting {
+            background: rgba(33, 150, 243, 0.1);
+            color: #2196F3;
+        }
+        
+        &.retry {
+            background: rgba(244, 67, 54, 0.1);
+            color: #F44336;
+        }
+        
+        i {
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.pos .payment-screen .geidea-send-button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background: #00a09d;
+    color: white;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    
+    &:hover {
+        background: darken(#00a09d, 5%);
+    }
+    
+    i {
+        margin-right: 5px;
+    }
+}
+
+.pos .payment-screen {
+    .geidea-send-icon {
+        display: inline-block;
+        margin-left: 8px;
+        padding: 4px;
+        cursor: pointer;
+        border-radius: 3px;
+        
+        i {
+            font-size: 16px;
+            color: #00a09d;
+            
+            &:hover {
+                color: darken(#00a09d, 10%);
+            }
+        }
+        
+        &.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    }
+
+    .payment-terminal-button {
+        padding: 12px;
+        
+        .geidea-send-button {
+            width: 100%;
+            background: #00a09d;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 10px;
+            font-size: 14px;
+            
+            &:hover:not(.disabled) {
+                background: darken(#00a09d, 5%);
+            }
+            
+            &.disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+            
+            i {
+            margin-right: 5px;
+        }
+    }
+}
+
+// Payment restriction styles
+.geidea-payment-warning {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+    padding: 12px;
+    border-radius: 4px;
+    margin: 10px 0;
+    font-size: 14px;
+    
+    i {
+        margin-right: 8px;
+        color: #f39c12;
+    }
+    
+    strong {
+        font-weight: 600;
+    }
+}
+
+// Disabled button styles for payment processing
+.pos .payment-screen {
+    .button.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+        
+        &:hover {
+            background: inherit;
+        }
+    }
+    
+    .back.disabled {
+        background-color: #cccccc !important;
+        color: #666666 !important;
+        
+        &:hover {
+            background-color: #cccccc !important;
+        }
+    }
+}
+
+// Alert styling for payment processing warnings
+.alert {
+    &.alert-warning {
+        background-color: #fff3cd;
+        border-color: #ffeaa7;
+        color: #856404;
+        
+        .fa-exclamation-triangle {
+            color: #f39c12;
+        }
+    }
+}
+}

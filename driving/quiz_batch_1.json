@@ -1,0 +1,37 @@
+[
+    {
+        "section_id": 1,
+        "question": "What is the primary principle of defensive driving?",
+        "options": ["To drive as fast as possible", "To be alert and avoid accidents caused by others", "To honk frequently", "To ignore other drivers"],
+        "answer": 1,
+        "explanation": "Defensive driving means being alert and prepared to avoid accidents caused by the mistakes of other road users."
+    },
+    {
+        "section_id": 1,
+        "question": "Which of the following impairs a driver's ability?",
+        "options": ["Good weather", "Adequate rest", "Alcohol and drugs", "Proper vehicle maintenance"],
+        "answer": 2,
+        "explanation": "Alcohol, drugs, fatigue, stress, and illness can all impair a driver's ability to drive safely."
+    },
+    {
+        "section_id": 1,
+        "question": "What documents should a driver always carry?",
+        "options": ["Only driver's license", "License, registration, and insurance", "Just registration", "Only insurance"],
+        "answer": 1,
+        "explanation": "Drivers must carry their license, vehicle registration, and insurance documents at all times."
+    },
+    {
+        "section_id": 2,
+        "question": "According to the basic principles of driving, how must the driving speed always be adapted?",
+        "options": ["To the maximum permissible speed only", "To the vehicle's horsepower", "To the surrounding conditions, allowing the driver to stop in time to avoid danger", "To the speed of other vehicles around"],
+        "answer": 2,
+        "explanation": "The driving speed must always be adapted to the surrounding conditions and must be chosen in such a way that it is possible to stop in time to avoid a collision."
+    },
+    {
+        "section_id": 2,
+        "question": "You are driving at 60 km/h on a dry road. What is your approximate total stopping distance?",
+        "options": ["40m", "54m", "88m", "130m"],
+        "answer": 1,
+        "explanation": "At 60 km/h, the stopping distance is 54m (18m reaction distance + 36m braking distance)."
+    }
+]

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+
+    <t t-name="PaymentScreen" t-inherit="point_of_sale.PaymentScreen" t-inherit-mode="extension" owl="1">
+        <xpath expr="//div[hasclass('payment-controls')]" position="inside">
+            <t t-if="currentOrder.selected_paymentline and currentOrder.selected_paymentline.payment_method.use_payment_terminal === 'geidea'">
+                <div class="payment-terminal-button">
+                    <button class="button geidea-send-button" 
+                            t-on-click="() => currentOrder.selected_paymentline.payment_method.payment_terminal.send_payment_request(currentOrder.selected_paymentline.cid)"
+                            t-att-class="{ 
+                                disabled: currentOrder.selected_paymentline.payment_method.payment_terminal.status === 'waiting',
+                                'button-success': currentOrder.selected_paymentline.payment_method.payment_terminal.status === 'done',
+                                'button-error': currentOrder.selected_paymentline.payment_method.payment_terminal.status === 'retry'
+                            }">
+                        <t t-if="currentOrder.selected_paymentline.payment_method.payment_terminal.status === 'pending'">
+                            <i class="fa fa-credit-card"/> Send to Terminal
+                        </t>
+                        <t t-if="currentOrder.selected_paymentline.payment_method.payment_terminal.status === 'waiting'">
+                            <i class="fa fa-spinner fa-spin"/> Processing...
+                        </t>
+                        <t t-if="currentOrder.selected_paymentline.payment_method.payment_terminal.status === 'done'">
+                            <i class="fa fa-check"/> Payment Complete
+                        </t>
+                        <t t-if="currentOrder.selected_paymentline.payment_method.payment_terminal.status === 'retry'">
+                            <i class="fa fa-refresh"/> Retry Payment
+                        </t>
+                    </button>
+                </div>
+            </t>
+        </xpath>
+        
+        <!-- Add visual indicator for waiting payments -->
+        <xpath expr="//div[hasclass('payment-controls')]" position="before">
+            <t t-if="currentOrder and currentOrder.paymentlines.some(line => line.payment_method.use_payment_terminal === 'geidea' and (line.get_payment_status() === 'waiting' || (line.payment_method.payment_terminal and line.payment_method.payment_terminal.status === 'waiting')))">
+                <div class="geidea-payment-warning alert alert-warning">
+                    <i class="fa fa-exclamation-triangle"/> 
+                    <strong>Payment Processing:</strong> Terminal payment in progress. Navigation and order modifications are restricted.
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

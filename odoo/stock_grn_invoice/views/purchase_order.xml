@@ -1,0 +1,49 @@
+<odoo>
+    <data>
+        <record id="view_purchase_order_form_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.inherited</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name='bill_creation_source' invisible="1"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_create_invoice'][1]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|',('state', 'not in', ('purchase', 'done')), ('invoice_status', 'in', ('no', 'invoiced')), ('bill_creation_source', '=', 'receipts')]}</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_create_invoice'][2]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|', '|' ,('state', 'not in', ('purchase', 'done')), ('invoice_status', 'not in', ('no', 'invoiced')), ('order_line', '=', []), ('bill_creation_source', '=', 'receipts')]}</attribute>
+                </xpath>
+
+                <xpath expr="//button[@name='action_create_invoice']" position="after">
+                    <button name="action_open_create_bill_from_receipts"
+                            string="Create Bill From Receipts"
+                            type="object" class="oe_highlight" context="{'create_bill':True}"
+                            attrs="{'invisible': ['|', '|' , ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'in', ('no', 'invoiced')), ('bill_creation_source', '=', 'order')]}" data-hotkey="w"
+                            groups="stock_grn_invoice.group_custom_invoice_from_picking_group"/>
+                    <button name="action_open_create_bill_from_receipts"
+                            string="Create Bill From Receipts"
+                            type="object" context="{'create_bill':True}"
+                            attrs="{'invisible': ['|', '|', '|' , ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'not in', ('no', 'invoiced')), ('order_line', '=', []), ('bill_creation_source', '=', 'order')]}"
+                            groups="stock_grn_invoice.group_custom_invoice_from_picking_group"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.actions.server" id="action_create_bill_from_receipts_from_action_window">
+            <field name="name">Create Bill From Shipment</field>
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+            <field name="binding_view_types">list,form</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.action_open_create_bill_from_receipts_from_window()
+            </field>
+        </record>
+
+    </data>
+</odoo>

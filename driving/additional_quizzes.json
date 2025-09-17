@@ -1,0 +1,142 @@
+[
+    {
+        "section_id": 87,
+        "question": "What is the core principle of defensive driving?",
+        "options": ["Driving as fast as possible", "Being alert and anticipating potential hazards", "Only following traffic rules when police are present", "Competing with other drivers"],
+        "answer": 1,
+        "explanation": "Defensive driving involves being alert, anticipating potential hazards, and being prepared to react to avoid accidents."
+    },
+    {
+        "section_id": 62,
+        "question": "What documents must a driver always carry while driving?",
+        "options": ["Only driver's license", "Driver's license and vehicle registration", "Driver's license, vehicle registration, and insurance certificate", "None required"],
+        "answer": 2,
+        "explanation": "A driver must always carry their valid driver's license, vehicle registration (Istimara), and proof of insurance."
+    },
+    {
+        "section_id": 88,
+        "question": "What is the relationship between speed and braking distance?",
+        "options": ["They are unrelated", "Braking distance increases linearly with speed", "Braking distance increases exponentially with speed", "Higher speed means shorter braking distance"],
+        "answer": 2,
+        "explanation": "Braking distance increases exponentially with speed - doubling speed quadruples the braking distance."
+    },
+    {
+        "section_id": 63,
+        "question": "What factors affect stopping distance?",
+        "options": ["Speed only", "Road conditions only", "Speed, reaction time, road conditions, and vehicle condition", "Vehicle color"],
+        "answer": 2,
+        "explanation": "Stopping distance is affected by speed, driver reaction time, road conditions (wet, dry, icy), and vehicle condition (brakes, tires)."
+    },
+    {
+        "section_id": 89,
+        "question": "What does a triangular sign with a red border indicate?",
+        "options": ["Information", "Warning of potential danger", "Mandatory instruction", "Road closure"],
+        "answer": 1,
+        "explanation": "Triangular signs with red borders are warning signs that alert drivers to potential dangers ahead."
+    },
+    {
+        "section_id": 64,
+        "question": "What does a circular sign with a red border and a diagonal line indicate?",
+        "options": ["Speed limit", "Warning", "Prohibition", "Information"],
+        "answer": 2,
+        "explanation": "Circular signs with red borders indicate prohibitions - things that are not allowed."
+    },
+    {
+        "section_id": 90,
+        "question": "Who has the right of way at an intersection with a STOP sign?",
+        "options": ["The vehicle that arrives second", "All traffic except the vehicle at the STOP sign", "The vehicle at the STOP sign", "The largest vehicle"],
+        "answer": 1,
+        "explanation": "At a STOP sign, you must come to a complete stop and yield the right of way to all other traffic and pedestrians."
+    },
+    {
+        "section_id": 65,
+        "question": "When entering a roundabout, who has priority?",
+        "options": ["Vehicles entering the roundabout", "Traffic already circulating in the roundabout", "The largest vehicle", "No one has priority"],
+        "answer": 1,
+        "explanation": "Traffic already circulating within the roundabout has the right of way. You must yield before entering."
+    },
+    {
+        "section_id": 91,
+        "question": "What is the correct sequence for changing lanes (MSM routine)?",
+        "options": ["Maneuver, Signal, Mirror", "Mirror, Signal, Maneuver", "Signal, Mirror, Maneuver", "Mirror, Maneuver, Signal"],
+        "answer": 1,
+        "explanation": "The MSM routine is: Mirror (check), Signal (indicate intention), Maneuver (change lanes when safe)."
+    },
+    {
+        "section_id": 66,
+        "question": "When is overtaking prohibited?",
+        "options": ["On straight roads", "When there's good visibility", "At intersections, curves, and hills", "During daytime"],
+        "answer": 2,
+        "explanation": "Overtaking is prohibited at intersections, on curves, hills, and anywhere visibility is limited or it would be unsafe."
+    },
+    {
+        "section_id": 92,
+        "question": "What is drifting (Tafheet) and what are its consequences?",
+        "options": ["A normal driving technique with no consequences", "An illegal maneuver with severe penalties including fines and vehicle impoundment", "Only illegal in school zones", "Legal on private property only"],
+        "answer": 1,
+        "explanation": "Drifting is a serious traffic violation with severe penalties including large fines, vehicle impoundment, and potential imprisonment."
+    },
+    {
+        "section_id": 67,
+        "question": "How many points lead to license withdrawal in Saudi Arabia?",
+        "options": ["12 points", "18 points", "24 points", "36 points"],
+        "answer": 2,
+        "explanation": "Accumulating 24 points in one Hijri year results in driver's license withdrawal."
+    },
+    {
+        "section_id": 93,
+        "question": "What is the minimum age for obtaining a private driver's license in Saudi Arabia?",
+        "options": ["16 years", "17 years", "18 years", "21 years"],
+        "answer": 2,
+        "explanation": "The minimum age for obtaining a private driver's license is 18 years (with exceptions for 17-year-olds with temporary permits)."
+    },
+    {
+        "section_id": 68,
+        "question": "How long is a private driver's license valid?",
+        "options": ["5 years", "7 years", "10 years", "15 years"],
+        "answer": 2,
+        "explanation": "A private driver's license is valid for a maximum of 10 years."
+    },
+    {
+        "section_id": 94,
+        "question": "What should you check before starting your vehicle?",
+        "options": ["Only fuel level", "Tires, brakes, lights, and fluid levels", "Only the radio", "Nothing needs checking"],
+        "answer": 1,
+        "explanation": "Pre-drive checks should include tires, brakes, lights, signals, and fluid levels to ensure safe operation."
+    },
+    {
+        "section_id": 69,
+        "question": "What do red dashboard warning lights indicate?",
+        "options": ["Normal operation", "Minor issue", "Serious problem requiring immediate attention", "Decorative purposes"],
+        "answer": 2,
+        "explanation": "Red dashboard warning lights indicate serious problems that require immediate attention and you should stop the vehicle safely as soon as possible."
+    },
+    {
+        "section_id": 95,
+        "question": "If you double your speed, how does it affect your braking distance?",
+        "options": ["Doubles", "Triples", "Quadruples", "Stays the same"],
+        "answer": 2,
+        "explanation": "Braking distance is proportional to the square of speed, so doubling speed increases braking distance by four times."
+    },
+    {
+        "section_id": 70,
+        "question": "What is reaction distance?",
+        "options": ["Distance traveled after braking", "Distance traveled while recognizing danger and starting to brake", "Total stopping distance", "Distance between vehicles"],
+        "answer": 1,
+        "explanation": "Reaction distance is the distance traveled from when you recognize a hazard until you start applying the brakes."
+    },
+    {
+        "section_id": 96,
+        "question": "What does a broken white line on the road indicate?",
+        "options": ["No crossing allowed", "Crossing allowed when safe", "Emergency lane", "Parking area"],
+        "answer": 1,
+        "explanation": "A broken white line indicates that you may cross it when it's safe to do so, such as for overtaking."
+    },
+    {
+        "section_id": 71,
+        "question": "What should you do at a zebra crossing?",
+        "options": ["Speed up to clear it quickly", "Honk to warn pedestrians", "Give way to pedestrians", "Ignore pedestrians"],
+        "answer": 2,
+        "explanation": "At zebra crossings (pedestrian crossings), drivers must give way to pedestrians crossing or waiting to cross."
+    }
+]

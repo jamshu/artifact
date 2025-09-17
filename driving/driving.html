@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Safe Driver's Hub - KSA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .module-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: #2563eb;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+        .btn-secondary {
+            background-color: #e5e7eb;
+            color: #374151;
+        }
+        .btn-secondary:hover {
+            background-color: #d1d5db;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 2rem;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 12px;
+            position: relative;
+        }
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e5e7eb;
+            border-radius: 9999px;
+            height: 10px;
+        }
+        .progress-bar {
+            background-color: #2563eb;
+            height: 10px;
+            border-radius: 9999px;
+            width: 0%;
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-800">The Safe Driver's Hub</h1>
+            <div class="w-1/3">
+                <div class="progress-bar-container">
+                    <div id="progressBar" class="progress-bar"></div>
+                </div>
+                <p id="progressText" class="text-center text-sm mt-1 text-gray-600">0% Complete</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+        <div id="main-menu" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Module cards will be injected here by JavaScript -->
+        </div>
+
+        <!-- Module Content Area -->
+        <div id="module-content-area" class="hidden">
+            <!-- Content for selected module will be injected here -->
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-white mt-12 py-6">
+        <div class="container mx-auto px-6 text-center text-gray-600">
+            <p>&copy; 2024 The Safe Driver's Hub. Based on the Theoretical Driving Handbook Trainee-Moroor.</p>
+        </div>
+    </footer>
+
+    <!-- Modal for feedback -->
+    <div id="feedbackModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('feedbackModal')">&times;</span>
+            <div id="feedbackContent"></div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- DATA ---
+        const appData = {
+            modules: [
+                {
+                    id: 'intro',
+                    title: 'Introduction & Driver Responsibilities',
+                    description: 'Learn about defensive driving, fitness to drive, and your obligations as a driver.',
+                    completed: false,
+                    interactiveElement: {
+                        type: 'checklist',
+                        title: 'Defensive Driving Checklist',
+                        instructions: 'Select all statements that represent correct defensive driving behavior.',
+                        items: [
+                            { statement: 'I ensure I am physically and mentally fit before driving.', correct: true, explanation: 'Correct. A driver must always be fit to drive, free from fatigue or stress. (Source: Driver’s Obligations)' },
+                            { statement: 'I check my mirrors and blind spot before changing lanes.', correct: true, explanation: 'Correct. This is a critical step to avoid collisions when changing lanes. (Source: Changing Lanes)' },
+                            { statement: 'It\'s okay to drive slightly over the speed limit if traffic is light.', correct: false, explanation: 'Incorrect. Speed limits must always be respected, regardless of traffic conditions. (Source: Speed and its consequences)' },
+                            { statement: 'I maintain a two-second gap behind the vehicle in front.', correct: true, explanation: 'Correct. The two-second rule helps ensure you have enough time to stop. (Source: Safety Distance)' },
+                            { statement: 'Using a phone is acceptable as long as it\'s hands-free.', correct: false, explanation: 'Incorrect. The handbook emphasizes avoiding all distractions. Even hands-free calls can divert your attention. (Source: Introduction)' },
+                            { statement: 'I anticipate the actions of other road users, including pedestrians and cyclists.', correct: true, explanation: 'Correct. This is a core principle of defensive driving - staying alert to potential hazards. (Source: Cooperative behavior)' },
+                        ]
+                    },
+                    mcqs: [
+                        {
+                            question: "What is the primary goal of defensive driving?",
+                            options: ["To get to your destination as fast as possible.", "To avoid accidents despite the incorrect actions of others.", "To teach other drivers a lesson.", "To only follow the rules when a police officer is present."],
+                            answer: 1,
+                            explanation: "Defensive driving means staying alert and avoiding collisions caused by the mistakes of other road users. (Source: Introduction)"
+                        }
+                    ]
+                },
+                {
+                    id: 'speed',
+                    title: 'Speed & Stopping Distance',
+                    description: 'Understand the critical relationship between speed, reaction time, and braking distance.',
+                    completed: false,
+                    interactiveElement: {
+                        type: 'calculator',
+                        title: 'Stopping Distance Calculator',
+                        instructions: 'Use the slider to see how speed affects stopping distance on a dry road.'
+                    },
+                    mcqs: [
+                        {
+                            question: "According to the basic principles of driving, how must the driving speed always be adapted?",
+                            options: ["To the maximum permissible speed only.", "To the vehicle's horsepower.", "To the surrounding conditions, allowing the driver to stop in time to avoid danger.", "To the speed of other vehicles around."],
+                            answer: 2,
+                            explanation: "The basic principle of driving states, 'The driving speed must always be adapted to the surrounding conditions' and 'must be chosen in such a way that it is possible to stop in time to avoid a collision with an obstacle and evade other sources of danger'. (Source: Speed and its consequences)"
+                        },
+                        {
+                            question: "You are driving at 60 km/h on a dry road. What is your approximate total stopping distance?",
+                            options: ["40m", "54m", "88m", "130m"],
+                            answer: 1,
+                            explanation: "The table on page 29 of the handbook explicitly states that at 60 km/h, the stopping distance is 54m (18m reaction distance + 36m braking distance). (Source: Speed and its consequences)"
+                        }
+                    ]
+                },
+                {
+                    id: 'signs',
+                    title: 'Traffic Signs Masterclass',
+                    description: 'Master the shapes, colors, and meanings of all Saudi Arabian traffic signs.',
+                    completed: false,
+                    interactiveElement: {
+                        type: 'dragdrop',
+                        title: 'Traffic Sign Identifier',
+                        instructions: 'Drag each sign to its correct category.',
+                        signs: [
+                            { id: 'sign1', name: 'Winding Road', category: 'Warning', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="white" stroke="red" stroke-width="8" d="M10 90 L50 10 L90 90 Z"/><path d="M35 75 q 15 -30 30 0 q -15 30 -30 0" fill="none" stroke="black" stroke-width="6"/></svg>' },
+                            { id: 'sign2', name: 'Stop', category: 'Regulatory', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="red" stroke="white" stroke-width="4" d="M29.3 10 L70.7 10 L90 29.3 L90 70.7 L70.7 90 L29.3 90 L10 70.7 L10 29.3 Z"/><text x="50" y="60" font-size="30" fill="white" text-anchor="middle" font-family="Arial" font-weight="bold">STOP</text></svg>' },
+                            { id: 'sign3', name: 'Straight Ahead Mandatory', category: 'Regulatory', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="blue"/><path d="M50 20 L50 80 M50 20 L40 35 M50 20 L60 35" fill="none" stroke="white" stroke-width="8" stroke-linecap="round"/></svg>' },
+                            { id: 'sign4', name: 'Road Work', category: 'Temporary Work Zone', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="yellow" stroke="black" stroke-width="4" d="M10 90 L50 10 L90 90 Z"/><path d="M50 40 l-10 20 h20z m0 0 v-10 m-15 35 h30 v5 h-30z m-5-20 h-5 l5-10 m20 0 l5 10 h-5" stroke="black" stroke-width="4" fill="black"/></svg>' },
+                            { id: 'sign5', name: 'No Entry', category: 'Regulatory', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="red"/><rect x="20" y="45" width="60" height="10" fill="white"/></svg>' },
+                            { id: 'sign6', name: 'Pedestrian Crossing', category: 'Warning', svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="white" stroke="red" stroke-width="8" d="M10 90 L50 10 L90 90 Z"/><path d="M50,30 a5,5 0 1,1 0,-0.1 M40,80 l20,-40 l-10,0 l-10,20 l20,0 l-10,20" stroke="black" stroke-width="5" fill="none"/></svg>'}
+                        ],
+                        categories: ['Warning', 'Regulatory', 'Guide', 'Temporary Work Zone']
+                    },
+                    mcqs: [
+                        {
+                            question: "What is the shape and color of a standard warning sign?",
+                            options: ["Circular with a blue background.", "Octagonal and red.", "Rectangular and green.", "Triangular with a red border."],
+                            answer: 3,
+                            explanation: "Warning signs are triangular with a white background and a red border to alert drivers of potential hazards ahead. (Source: Traffic Signs)"
+                        }
+                    ]
+                },
+                {
+                    id: 'priority',
+                    title: 'Right-of-Way & Crossings',
+                    description: 'Navigate intersections, crossings, and priority rules with confidence.',
+                    completed: false,
+                    interactiveElement: {
+                        type: 'scenario',
+                        title: 'Scenario Simulator: What Would You Do?',
+                        scenarios: [
+                            {
+                                id: 'scenario1',
+                                text: "You are approaching an uncontrolled intersection at the same time as another vehicle coming from your right. What is your correct action?",
+                                options: ["Speed up to pass first.", "Honk to assert your right-of-way.", "Yield to the vehicle on your right.", "Stop and wait for the other driver to signal."],
+                                answer: 2,
+                                explanation: "Correct! According to the 'Right Before Left Rule', the vehicle on the right has the right-of-way at equal intersections when vehicles approach simultaneously. (Source: Right-of-way rules or priority rules)"
+                            },
+                            {
+                                id: 'scenario2',
+                                text: "You are driving towards a pedestrian crossing and see a person waiting to cross. There are no traffic lights. What should you do?",
+                                options: ["Maintain your speed as they have not stepped onto the road.", "Slow down and be prepared to stop, allowing the pedestrian to cross safely.", "Honk to let them know you are passing.", "Swerve around them."],
+                                answer: 1,
+                                explanation: "Correct! Drivers must slow down and give way to pedestrians waiting to cross at designated crossings. Their safety is the priority. (Source: Pedestrian crossings)"
+                            }
+                        ]
+                    },
+                    mcqs: [
+                        {
+                            question: "At an intersection with a flashing yellow light, what should a driver do?",
+                            options: ["Stop completely before proceeding.", "Proceed with caution, yielding to pedestrians and other traffic.", "Treat it as a green light and continue at speed.", "The light is broken, find another route."],
+                            answer: 1,
+                            explanation: "A flashing yellow light means proceed with caution. You have priority, but must be aware of other potential hazards. (Source: Intersections regulated by traffic lights)"
+                        }
+                    ]
+                },
+                {
+                    id: 'maneuvers',
+                    title: 'Driving Maneuvers & Awareness',
+                    description: 'Master lane changes, turning, overtaking, and maintaining a safe distance.',
+                    completed: false,
+                    interactiveElement: {
+                        type: 'scenario',
+                        title: 'Scenario Simulator: What Would You Do?',
+                        scenarios: [
+                            {
+                                id: 'scenario3',
+                                text: "You want to overtake a slower vehicle on a two-lane road. What is the first thing you must do?",
+                                options: ["Move closer to the vehicle's bumper to signal your intent.", "Ensure the road ahead is clear, there are no oncoming vehicles, and overtaking is permitted.", "Flash your headlights repeatedly.", "Immediately swerve into the other lane."],
+                                answer: 1,
+                                explanation: "Correct! Before attempting to overtake, you must ensure it is safe and legal to do so by checking for clear visibility, no oncoming traffic, and no prohibitive signs or road markings. (Source: Requirements for overtaking safely)"
+                            }
+                        ]
+                    },
+                    mcqs: [
+                        {
+                            question: "Under what circumstances is overtaking prohibited, even if speed limits are respected?",
+                            options: ["When driving on a straight road with clear visibility.", "At intersections and railway lanes.", "When the vehicle in front is moving slowly.", "On multi-lane roads."],
+                            answer: 1,
+                            explanation: "The sources explicitly list 'At intersections and railway lanes' and 'At pedestrian crossings' as places where overtaking is prohibited. (Source: Overtaking prohibitions)"
+                        }
+                    ]
+                },
+                {
+                    id: 'violations',
+                    title: 'Traffic Violations & Consequences',
+                    description: 'Understand the points system, fines, and penalties for traffic violations.',
+                    completed: false,
+                    interactiveElement: {
+                        type: 'explorer',
+                        title: 'Violation Consequences Explorer',
+                        instructions: 'Click on a violation to see its penalties.',
+                        violations: [
+                            { name: 'Exceeding speed limit by more than 50 km/h (where limit is <= 120 km/h)', fine: '1,500-2,000 riyals', points: 8 },
+                            { name: 'Drifting (Tafheet) - First time', fine: '20,000 riyals', points: 24, other: 'Vehicle impounded for 15 days.' },
+                            { name: 'Not stopping at a red light', fine: '3,000-6,000 riyals', points: 8 },
+                            { name: 'Driving under the influence of alcohol or drugs', fine: '10,000 riyals', points: 24, other: 'Referral to court.' },
+                            { name: 'Using a mobile phone while driving', fine: '500-900 riyals', points: 4 },
+                            { name: 'Not wearing a seatbelt', fine: '150-300 riyals', points: 2 }
+                        ]
+                    },
+                    mcqs: [
+                        {
+                            question: "What is the penalty for exceeding the speed limit by more than 50 km/h when the speed limit on the road is 120 km/h or less?",
+                            options: ["A fine of (300-500) riyals.", "A fine of (800-1,000) riyals.", "A fine of (1,200-1,500) riyals.", "A fine of (1,500-2,000) riyals."],
+                            answer: 3,
+                            explanation: "Violations table specifies that for speed limits of 120 km/h or less, exceeding speed by more than 50 km/h incurs a fine of (1,500-2,000) riyals. (Source: Violations and penalties list)"
+                        },
+                        {
+                            question: "How many points recorded against a driver in one Hijri year lead to the withdrawal of their license for the first time?",
+                            options: ["12 points", "18 points", "24 points", "30 points"],
+                            answer: 2,
+                            explanation: "The procedure for withdrawing a license is applied if the number of points recorded in the violating driver’s record reaches 24 points within one Hijri year. (Source: Traffic Violations Points System)"
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // --- DOM ELEMENTS ---
+        const mainMenu = document.getElementById('main-menu');
+        const moduleContentArea = document.getElementById('module-content-area');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+
+        // --- APP LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMainMenu();
+            updateProgress();
+        });
+
+        function renderMainMenu() {
+            mainMenu.innerHTML = '';
+            appData.modules.forEach(module => {
+                const card = document.createElement('div');
+                card.className = 'module-card p-6 flex flex-col justify-between cursor-pointer';
+                card.onclick = () => showModule(module.id);
+                card.innerHTML = `
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-800 mb-2">${module.title}</h2>
+                        <p class="text-gray-600">${module.description}</p>
+                    </div>
+                    <div class="mt-4 flex justify-end items-center">
+                        ${module.completed ? '<span class="text-green-500 font-semibold">✓ Completed</span>' : '<span class="text-blue-500 font-semibold">Start Learning →</span>'}
+                    </div>
+                `;
+                mainMenu.appendChild(card);
+            });
+        }
+        
+        function showModule(moduleId) {
+            const module = appData.modules.find(m => m.id === moduleId);
+            if (!module) return;
+
+            mainMenu.classList.add('hidden');
+            moduleContentArea.classList.remove('hidden');
+            
+            let contentHTML = `
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <button class="btn btn-secondary mb-6" onclick="showMainMenu()">← Back to Menu</button>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">${module.title}</h2>
+                    <hr class="mb-6">
+            `;
+
+            // Interactive Element
+            if (module.interactiveElement) {
+                contentHTML += renderInteractiveElement(module.id, module.interactiveElement);
+            }
+
+            // MCQs
+            if (module.mcqs && module.mcqs.length > 0) {
+                contentHTML += `
+                    <div class="mt-12">
+                        <h3 class="text-2xl font-bold text-gray-700 mb-4">Knowledge Check</h3>
+                        <div id="mcq-container-${module.id}"></div>
+                    </div>
+                `;
+            }
+
+            contentHTML += `
+                    <div class="mt-8 text-center">
+                        <button class="btn btn-primary" onclick="markModuleComplete('${module.id}')">Mark as Complete</button>
+                    </div>
+                </div>
+            `;
+
+            moduleContentArea.innerHTML = contentHTML;
+            renderMCQs(module.id);
+
+            // Post-render setup for interactive elements
+            if (module.interactiveElement.type === 'dragdrop') setupDragDrop();
+            if (module.interactiveElement.type === 'calculator') setupCalculator();
+        }
+
+        function renderInteractiveElement(moduleId, el) {
+            let html = `<div class="bg-blue-50 p-6 rounded-lg border border-blue-200">
+                <h3 class="text-2xl font-bold text-gray-700 mb-2">${el.title}</h3>
+                <p class="text-gray-600 mb-6">${el.instructions}</p>`;
+
+            switch (el.type) {
+                case 'checklist':
+                    html += `<div id="checklist-${moduleId}" class="space-y-3">`;
+                    el.items.forEach((item, index) => {
+                        html += `
+                            <label class="flex items-center p-3 bg-white rounded-lg shadow-sm hover:bg-gray-50 cursor-pointer">
+                                <input type="checkbox" class="h-5 w-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500" data-correct="${item.correct}">
+                                <span class="ml-3 text-gray-700">${item.statement}</span>
+                            </label>
+                        `;
+                    });
+                    html += `</div><button class="btn btn-primary mt-4" onclick="checkChecklist('${moduleId}')">Submit Answers</button>`;
+                    break;
+                case 'calculator':
+                    html += `
+                        <div class="flex flex-col items-center">
+                            <label for="speedSlider" class="font-medium text-lg">Speed: <span id="speedValue">75</span> km/h</label>
+                            <input type="range" id="speedSlider" min="30" max="120" value="75" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer my-4">
+                            <div class="w-full mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                                <div>
+                                    <p class="text-gray-600">Reaction Distance</p>
+                                    <p id="reactionDist" class="text-2xl font-bold text-blue-600">22.5 m</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Braking Distance</p>
+                                    <p id="brakingDist" class="text-2xl font-bold text-orange-500">42.2 m</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Total Stopping Distance</p>
+                                    <p id="totalDist" class="text-3xl font-bold text-red-600">64.7 m</p>
+                                </div>
+                            </div>
+                            <p class="mt-6 text-center text-sm text-gray-500 italic">Notice how quickly stopping distance increases with speed, underlining the importance of the 'Stop in Time' principle!</p>
+                        </div>
+                    `;
+                    break;
+                case 'dragdrop':
+                    html += `<div class="flex flex-col lg:flex-row gap-8">
+                                <div id="sign-pool" class="w-full lg:w-1/3 p-4 bg-gray-100 rounded-lg space-y-4">
+                                    ${el.signs.map(s => `<div class="sign-item p-2 bg-white rounded shadow cursor-grab text-center" draggable="true" id="${s.id}" data-category="${s.category}">${s.svg}<p class="font-semibold">${s.name}</p></div>`).join('')}
+                                </div>
+                                <div id="category-lanes" class="w-full lg:w-2/3 grid grid-cols-2 gap-4">
+                                    ${el.categories.map(c => `<div class="category-lane p-4 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300" data-category="${c}">
+                                        <h4 class="font-bold text-center mb-2">${c}</h4>
+                                        <div class="min-h-[100px]"></div>
+                                    </div>`).join('')}
+                                </div>
+                             </div>`;
+                    break;
+                case 'scenario':
+                    html += `<div id="scenario-container-${moduleId}" class="space-y-6">`;
+                    el.scenarios.forEach((scenario, index) => {
+                        html += `
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <p class="font-semibold mb-3">${index + 1}. ${scenario.text}</p>
+                                <div class="space-y-2">
+                                    ${scenario.options.map((opt, i) => `<button class="w-full text-left p-3 bg-gray-100 hover:bg-blue-100 rounded-lg" onclick="checkScenarioAnswer('${moduleId}', ${index}, ${i})">${opt}</button>`).join('')}
+                                </div>
+                                <div id="scenario-feedback-${moduleId}-${index}" class="mt-3"></div>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                    break;
+                case 'explorer':
+                    html += `<div class="space-y-3">`;
+                    el.violations.forEach((v, i) => {
+                        html += `
+                            <div class="p-3 bg-white rounded-lg shadow-sm cursor-pointer hover:bg-gray-50" onclick="toggleExplorerItem('explorer-details-${i}')">
+                                <p class="font-semibold">${v.name}</p>
+                                <div id="explorer-details-${i}" class="hidden mt-2 pt-2 border-t text-sm">
+                                    <p><strong>Fine:</strong> ${v.fine}</p>
+                                    <p><strong>Points:</strong> <span class="font-bold text-red-600">${v.points}</span></p>
+                                    ${v.other ? `<p><strong>Other:</strong> ${v.other}</p>` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += `</div>
+                    <div class="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg text-center">
+                        <p class="font-bold">Remember: Accumulating 24 points in one Hijri year leads to license withdrawal!</p>
+                    </div>
+                    `;
+                    break;
+            }
+            html += `</div>`;
+            return html;
+        }
+
+        function renderMCQs(moduleId) {
+            const module = appData.modules.find(m => m.id === moduleId);
+            const container = document.getElementById(`mcq-container-${moduleId}`);
+            if (!module || !container) return;
+
+            let mcqHTML = '';
+            module.mcqs.forEach((mcq, index) => {
+                mcqHTML += `
+                    <div class="mcq bg-gray-50 p-4 rounded-lg shadow-sm mb-4" id="mcq-${moduleId}-${index}">
+                        <p class="font-semibold mb-3">${mcq.question}</p>
+                        <div class="options space-y-2">
+                            ${mcq.options.map((option, i) => `<button class="w-full text-left p-3 bg-white hover:bg-blue-100 rounded-lg" onclick="checkMCQAnswer('${moduleId}', ${index}, ${i})">${option}</button>`).join('')}
+                        </div>
+                        <div class="feedback mt-3"></div>
+                    </div>
+                `;
+            });
+            container.innerHTML = mcqHTML;
+        }
+
+        function showMainMenu() {
+            moduleContentArea.classList.add('hidden');
+            mainMenu.classList.remove('hidden');
+            renderMainMenu();
+        }
+
+        window.checkMCQAnswer = function(moduleId, mcqIndex, selectedOptionIndex) {
+            const module = appData.modules.find(m => m.id === moduleId);
+            const mcq = module.mcqs[mcqIndex];
+            const mcqElement = document.getElementById(`mcq-${moduleId}-${mcqIndex}`);
+            const feedbackElement = mcqElement.querySelector('.feedback');
+            const optionButtons = mcqElement.querySelectorAll('.options button');
+
+            optionButtons.forEach(btn => btn.disabled = true); // Disable options after selection
+
+            if (selectedOptionIndex === mcq.answer) {
+                optionButtons[selectedOptionIndex].classList.add('bg-green-200', 'border-green-500');
+                feedbackElement.innerHTML = `
+                    <p class="font-bold text-green-700">Correct!</p>
+                    <p class="text-gray-600">${mcq.explanation}</p>
+                `;
+            } else {
+                optionButtons[selectedOptionIndex].classList.add('bg-red-200', 'border-red-500');
+                optionButtons[mcq.answer].classList.add('bg-green-200');
+                feedbackElement.innerHTML = `
+                    <p class="font-bold text-red-700">That's not quite right.</p>
+                    <p class="text-gray-600">${mcq.explanation}</p>
+                `;
+            }
+        }
+
+        window.markModuleComplete = function(moduleId) {
+            const module = appData.modules.find(m => m.id === moduleId);
+            if(module) {
+                module.completed = true;
+            }
+            updateProgress();
+            showMainMenu();
+        }
+
+        function updateProgress() {
+            const completedModules = appData.modules.filter(m => m.completed).length;
+            const totalModules = appData.modules.length;
+            const percentage = totalModules > 0 ? (completedModules / totalModules) * 100 : 0;
+            
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `${Math.round(percentage)}% Complete (${completedModules}/${totalModules})`;
+        }
+        
+        // --- INTERACTIVE ELEMENT HANDLERS ---
+        
+        window.checkChecklist = function(moduleId) {
+            const checklistContainer = document.getElementById(`checklist-${moduleId}`);
+            const checkboxes = checklistContainer.querySelectorAll('input[type="checkbox"]');
+            let feedbackHTML = '<h4 class="font-bold mb-2">Feedback:</h4><ul class="list-disc list-inside space-y-2">';
+            let allCorrect = true;
+
+            checkboxes.forEach(cb => {
+                const isCorrect = cb.dataset.correct === 'true';
+                const isChecked = cb.checked;
+                const parentLabel = cb.parentElement;
+                const explanation = appData.modules.find(m=>m.id===moduleId).interactiveElement.items.find(item => item.statement === parentLabel.textContent.trim()).explanation;
+
+                if (isChecked === isCorrect) {
+                   parentLabel.classList.add('bg-green-100');
+                   feedbackHTML += `<li class="text-green-700">${explanation}</li>`;
+                } else {
+                   parentLabel.classList.add('bg-red-100');
+                   feedbackHTML += `<li class="text-red-700">${explanation}</li>`;
+                   allCorrect = false;
+                }
+            });
+            feedbackHTML += '</ul>';
+            showModal('feedbackModal', feedbackHTML);
+        }
+
+        function setupCalculator() {
+            const slider = document.getElementById('speedSlider');
+            const speedValue = document.getElementById('speedValue');
+            const reactionDist = document.getElementById('reactionDist');
+            const brakingDist = document.getElementById('brakingDist');
+            const totalDist = document.getElementById('totalDist');
+
+            slider.addEventListener('input', (e) => {
+                const speed = parseInt(e.target.value);
+                speedValue.textContent = speed;
+
+                // Formulas based on common physics, adapted to match handbook examples where possible.
+                // Reaction distance (m) = speed (km/h) * 0.3 (assuming ~1 sec reaction time)
+                // Braking distance (m) = (speed (km/h) / 10)^2 / 2
+                const reaction = speed * 0.3; 
+                const braking = Math.pow(speed / 10, 2) / 2;
+                const total = reaction + braking;
+
+                reactionDist.textContent = `${reaction.toFixed(1)} m`;
+                brakingDist.textContent = `${braking.toFixed(1)} m`;
+                totalDist.textContent = `${total.toFixed(1)} m`;
+            });
+        }
+
+        function setupDragDrop() {
+            const signs = document.querySelectorAll('.sign-item');
+            const lanes = document.querySelectorAll('.category-lane');
+
+            signs.forEach(sign => {
+                sign.addEventListener('dragstart', () => {
+                    sign.classList.add('dragging');
+                });
+                sign.addEventListener('dragend', () => {
+                    sign.classList.remove('dragging');
+                });
+            });
+
+            lanes.forEach(lane => {
+                lane.addEventListener('dragover', e => {
+                    e.preventDefault();
+                    lane.classList.add('bg-blue-100');
+                });
+                lane.addEventListener('dragleave', () => {
+                    lane.classList.remove('bg-blue-100');
+                });
+                lane.addEventListener('drop', e => {
+                    e.preventDefault();
+                    lane.classList.remove('bg-blue-100');
+                    const draggedSign = document.querySelector('.dragging');
+                    const signCategory = draggedSign.dataset.category;
+                    const laneCategory = lane.dataset.category;
+                    
+                    if (signCategory === laneCategory) {
+                        lane.querySelector('div').appendChild(draggedSign);
+                        draggedSign.style.cursor = 'default';
+                        draggedSign.draggable = false;
+                        draggedSign.classList.add('border-2', 'border-green-500');
+                    } else {
+                         draggedSign.classList.add('border-2', 'border-red-500');
+                         setTimeout(() => draggedSign.classList.remove('border-2', 'border-red-500'), 1000);
+                    }
+                });
+            });
+        }
+
+        window.checkScenarioAnswer = function(moduleId, scenarioIndex, selectedOptionIndex) {
+            const module = appData.modules.find(m => m.id === moduleId);
+            const scenario = module.interactiveElement.scenarios[scenarioIndex];
+            const feedbackElement = document.getElementById(`scenario-feedback-${moduleId}-${scenarioIndex}`);
+            
+            if (selectedOptionIndex === scenario.answer) {
+                feedbackElement.innerHTML = `<p class="p-2 bg-green-100 text-green-800 rounded-lg">${scenario.explanation}</p>`;
+            } else {
+                const incorrectFeedback = "That's not the correct action. The right choice is explained below.";
+                feedbackElement.innerHTML = `<p class="p-2 bg-red-100 text-red-800 rounded-lg">${incorrectFeedback}</p> <p class="p-2 mt-2 bg-green-100 text-green-800 rounded-lg">${scenario.explanation}</p>`;
+            }
+        }
+
+        window.toggleExplorerItem = function(elementId) {
+            document.getElementById(elementId).classList.toggle('hidden');
+        }
+
+        // --- MODAL CONTROLS ---
+        function showModal(modalId, content) {
+            const modal = document.getElementById(modalId);
+            const contentDiv = document.getElementById('feedbackContent');
+            contentDiv.innerHTML = content;
+            modal.style.display = "flex";
+        }
+
+        window.closeModal = function(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('feedbackModal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+    </script>
+</body>
+</html>

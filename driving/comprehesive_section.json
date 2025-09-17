@@ -1,0 +1,82 @@
+[
+    {
+        "id": 1,
+        "title": "The Driver: Fitness, Responsibilities & License",
+        "content": "This section covers the driver's personal responsibilities and legal requirements.\n\n* Physical and Mental Fitness: A driver must be free from fatigue, stress, illness, and the influence of alcohol or drugs. Driving while impaired is a serious offense.\n\n* Defensive & Cooperative Driving: The core principle is to be alert, anticipate the actions of others, and cooperate with all road users to prevent accidents.\n\n* Driver Obligations: You must carry your driver's license, vehicle registration (Istimara), and valid insurance at all times. You are responsible for ensuring your vehicle is in safe working condition.\n\n* Driver's License: Licenses are issued based on vehicle type. Obtaining a license requires passing theoretical and practical tests."
+    },
+    {
+        "id": 2,
+        "title": "The Vehicle: Checks, Lights & Safety",
+        "content": "This section details essential vehicle knowledge for safe operation.\n\n* Pre-drive Checks: Regularly check tires (pressure and tread), brakes, lights, signals, and fluid levels.\n\n* Vehicle Lights: Understand the use of headlights (low and high beam), taillights, brake lights, turn signals, and hazard lights. Using the correct lights for the conditions is mandatory.\n\n* Safety Features: Seatbelts are mandatory for the driver and all passengers. Children must use appropriate car seats. Airbags, ABS (Anti-lock Braking System), and vehicle stability control are key safety systems.\n\n* Dashboard Indicators: Green lights are informational, yellow lights indicate a non-critical fault that needs checking, and red lights signify a serious issue requiring an immediate stop."
+    },
+    {
+        "id": 3,
+        "title": "Physics of Driving: Speed & Stopping Distance",
+        "content": "This section explains the physical forces that affect a moving vehicle.\n\n* Stopping Distance: This is the total distance a vehicle travels from the moment a driver recognizes a hazard until the vehicle comes to a complete stop. It is the sum of Reaction Distance and Braking Distance.\n\n* Reaction Distance: The distance traveled during the driver's reaction time (typically ~1 second).\n\n* Braking Distance: The distance the vehicle travels after the brakes are applied. It increases exponentially with speed (doubling speed quadruples braking distance).\n\n* Influencing Factors: Stopping distance is affected by speed, road conditions (wet, icy), tire condition, brake condition, and the driver's alertness."
+    },
+    {
+        "id": 4,
+        "title": "The Road Environment: Lanes & Markings",
+        "content": "This section defines the different parts of the road and the meaning of road markings.\n\n* Road Parts: Includes the carriageway (main road), lanes, shoulder (edge of the road for emergencies), and median (central divider).\n\n* Lane Markings: \n- Solid White Line: Do not cross.\n- Broken White Line: You may cross if it is safe (e.g., to overtake).\n- Yellow Line: Marks the edge of the carriageway.\n- Pedestrian Crossings (Zebra Crossings): Give way to pedestrians.\n- Box Junctions: Yellow criss-cross lines at intersections. Do not enter unless your exit is clear."
+    },
+    {
+        "id": 5,
+        "title": "Traffic Signs: Warning & Regulatory",
+        "content": "This section covers signs that alert drivers to hazards and enforce rules.\n\n* Warning Signs: Triangular with a red border. They warn of potential dangers ahead, such as a sharp curve, slippery road, or animal crossing.\n\n* Regulatory Signs (Prohibitory): Circular with a red border. They forbid certain actions, such as 'No Entry', 'No U-Turn', or display a speed limit that must not be exceeded.\n\n* Regulatory Signs (Mandatory): Circular with a blue background. They require a specific action, such as 'Straight Ahead Only' or 'Keep Right'."
+    },
+    {
+        "id": 6,
+        "title": "Traffic Signs: Guide, Temporary & Signals",
+        "content": "This section covers informational signs and traffic light signals.\n\n* Guide Signs: Rectangular, typically blue or green. They provide directions, distances, and information about destinations and services.\n\n* Temporary Work Zone Signs: Usually yellow or orange. They indicate road work, detours, and temporary hazards. You must slow down and be prepared to stop.\n\n* Traffic Light Signals: \n- Red: Stop before the line.\n- Yellow/Amber: Prepare to stop as the light is about to turn red.\n- Green: Proceed if the way is clear.\n- Flashing Yellow: Proceed with caution, yielding to other traffic.\n- Flashing Red: Treat as a STOP sign."
+    },
+    {
+        "id": 7,
+        "title": "Right of Way: Intersections & Roundabouts",
+        "content": "This section explains the rules for determining who has priority on the road.\n\n* Uncontrolled Intersections: At intersections without signs or signals, yield to traffic approaching from your right (the 'Right Before Left' rule).\n\n* Stop Signs: You must come to a complete stop before the line and yield to all cross-traffic and pedestrians before proceeding.\n\n* Yield Signs: You must slow down and be prepared to stop. Yield to all cross-traffic and pedestrians before proceeding.\n\n* Roundabouts: Yield to traffic already circulating within the roundabout. Enter when there is a safe gap."
+    },
+    {
+        "id": 8,
+        "title": "Priority Rules & Special Vehicles",
+        "content": "This section covers priority for specific vehicles and situations.\n\n* Emergency Vehicles: Always give way to police cars, ambulances, and fire trucks with active sirens and/or flashing lights. Pull over to the right and stop safely.\n\n* Pedestrians: Drivers must give way to pedestrians at marked pedestrian crossings and be cautious of pedestrians crossing elsewhere.\n\n* Uphill/Downhill: On a narrow mountain road, the vehicle traveling uphill has the right of way."
+    },
+    {
+        "id": 9,
+        "title": "Driving Maneuvers: Overtaking & Turning",
+        "content": "This section provides rules for common driving actions.\n\n* Lane Changing: Use the MSM routine: Mirror (check mirrors), Signal (indicate your intention), Manoeuvre (check blind spot and move when safe).\n\n* Overtaking: Only overtake when it is safe and legal. Do not overtake at intersections, on curves, hills, or where there is a solid line.\n\n* Turning: Get into the correct lane well in advance of the turn. Signal your intention early. Yield to pedestrians and oncoming traffic when turning."
+    },
+    {
+        "id": 10,
+        "title": "Parking & Reversing",
+        "content": "This section covers the rules for safely parking and reversing your vehicle.\n\n* Prohibited Parking: It is illegal to park where you would cause an obstruction or danger, such as on a pedestrian crossing, in front of a driveway, at a bus stop, in a tunnel, or on a bridge.\n\n* Parallel Parking: A common maneuver requiring you to park parallel to the curb between two other cars.\n\n* Reversing: Before reversing, ensure the path is completely clear. Use mirrors, and turn your body to look out the rear window. Reverse slowly and cautiously."
+    },
+    {
+        "id": 11,
+        "title": "Adverse Conditions & Accidents",
+        "content": "This section provides guidance for challenging driving situations.\n\n* Night Driving: Use headlights. Be aware of reduced visibility and the glare from other vehicles. Drive at a lower speed.\n\n* Rain & Fog: Reduce speed significantly. Increase following distance (use a four-second rule). Use low beam headlights in fog. If visibility is severely limited, pull over and stop in a safe place.\n\n* Accidents: If involved in a minor accident without injuries, move vehicles to the shoulder if possible. Contact 'Najm' for insured vehicles or the Traffic Police ('Moroor'). In case of injury, call 997 for the Red Crescent immediately and do not move the injured persons."
+    },
+    {
+        "id": 12,
+        "title": "Violations, Fines & The Points System",
+        "content": "This section outlines the consequences of breaking traffic laws.\n\n* Fines: Violations are categorized into tables, with fines ranging from 100 to 10,000 riyals depending on the severity.\n\n* Common Violations: Examples include speeding, not wearing a seatbelt, using a mobile phone, running a red light, and illegal parking.\n\n* The Points System: Points are assigned for violations. Accumulating 24 points in one Hijri year leads to license withdrawal. The duration of withdrawal increases for repeat offenses.\n\n* Drifting ('Tafheet'): This is a major offense with severe penalties, including large fines, vehicle impoundment, and potential imprisonment."
+    },
+    {
+        "id": 13,
+        "title": "Highway Driving & Etiquette",
+        "content": "This section focuses on the specific skills needed for driving on multi-lane highways.\n\n* Merging: When entering a highway, use the acceleration lane to match the speed of traffic before merging into a gap. Give way to traffic already on the highway.\n\n* Lane Discipline: Keep to the right-hand lanes unless overtaking. The leftmost lane is for overtaking only. Do not weave between lanes.\n\n* Following Distance: Maintain at least a three-second gap behind the vehicle in front, as speeds are higher.\n\n* Overtaking on Highways: Overtake on the left. After passing, signal and return to the right lane when you can see the entire front of the passed vehicle in your rearview mirror."
+    },
+    {
+        "id": 14,
+        "title": "The Traffic Violations Points System Explained",
+        "content": "This section provides a detailed look at how the demerit points system works.\n\n* Purpose: To identify and penalize habitually offending drivers.\n\n* Point Allocation: Different violations carry different point values (e.g., running a red light might be 8 points, while a seatbelt violation is 2 points).\n\n* Accumulation: Points are recorded against your license for each violation. The total is calculated over a one-Hijri-year period.\n\n* Consequences of 24 Points:\n- First Time: License withdrawn for 3 months.\n- Second Time: License withdrawn for 6 months.\n- Third Time: License withdrawn for 1 year.\n- Fourth Time: License is permanently revoked."
+    },
+    {
+        "id": 15,
+        "title": "Detailed Actions at an Accident Scene",
+        "content": "This section provides a step-by-step guide for handling traffic accidents.\n\n* Immediate Actions: Stop your vehicle safely. Turn on hazard lights. Check for injuries to yourself and others.\n\n* In Case of Injury: Your first priority is to call 997 for the Saudi Red Crescent. Do NOT move an injured person unless they are in immediate danger (e.g., from fire).\n\n* No Injuries (Minor Accident): If safe, move vehicles to the shoulder to avoid blocking traffic. Call 'Najm' (920000560) if you have insurance. If not insured, call the Traffic Police ('Moroor' at 993).\n\n* Information Exchange: Exchange names, phone numbers, license plate numbers, and insurance details with the other driver(s) involved."
+    },
+    {
+        "id": 16,
+        "title": "Vehicle Maintenance & Periodic Inspection (Fahas)",
+        "content": "This section covers the importance of keeping your vehicle in safe, roadworthy condition.\n\n* Regular Maintenance: Follow your vehicle manufacturer's recommended service schedule for oil changes, brake checks, and other essential services.\n\n* Periodic Technical Inspection (Fahas): This is a mandatory, periodic inspection for all vehicles to ensure they meet safety and emissions standards.\n\n* What Fahas Checks: The inspection includes brakes, steering, suspension, chassis, lighting, visibility (windows), emissions, and tires.\n\n* Importance: A valid Fahas certificate is required to renew your vehicle registration (Istimara). Driving without a valid Fahas can result in fines."
+    }
+]

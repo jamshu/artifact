@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pos_payment_method_view_form_inherit_geidea" model="ir.ui.view">
+        <field name="name">pos.payment.method.form.inherit.geidea</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="pos_sync_v16.pos_payment_method_view_form_inherit_pos_sync"/>
+        <field name="arch" type="xml">
+     
+
+             <notebook position="inside">
+                <!-- Settings -->
+                <page string="Geidea Configuration" 
+                      attrs="{'invisible': [('use_payment_terminal', '!=', 'geidea')]}">
+                    <group>
+
+                        <group string="Basic Settings">
+                            <!-- <field name="geidea_terminal_id" 
+                                attrs="{'required': [('use_payment_terminal', '=', 'geidea')]}"
+                                placeholder="Enter Terminal ID"/> -->
+                            <field name="geidea_port" placeholder="Default: 5000"/>
+                            <field name="geidea_app_id" placeholder="Enter App ID"/>
+                            <field name="geidea_connection_mode" widget="radio"/>
+                            <field name="geidea_print_settings" widget="radio"/>
+                        </group>
+                        
+                        <!-- Serial Connection Settings -->
+                        <group string="Serial Connection Settings" 
+                               attrs="{'invisible': [('geidea_connection_mode', '!=', 'COM')]}">
+                            <field name="geidea_com_name" 
+                                   attrs="{'required': [('geidea_connection_mode', '=', 'COM')]}"
+                                   placeholder="e.g., COM1"/>
+                            <field name="geidea_baud_rate" placeholder="Default: 38400"/>
+                            <field name="geidea_data_bits" placeholder="Default: 8"/>
+                            <field name="geidea_parity" placeholder="Default: none"/>
+                        </group>
+
+                
+              <!-- Network Connection Settings -->
+                        <group string="Network Connection Settings"
+                               attrs="{'invisible': [('geidea_connection_mode', '!=', 'TCP')]}">
+                            <field name="geidea_ip_address" 
+                                   attrs="{'required': [('geidea_connection_mode', '=', 'TCP')]}"
+                                   placeholder="e.g., 192.168.1.100"/>
+                            <field name="geidea_port" 
+                                   attrs="{'required': [('geidea_connection_mode', '=', 'TCP')]}"
+                                   placeholder="e.g., 5000"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>

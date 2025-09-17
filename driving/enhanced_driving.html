@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Driving Study Hub - KSA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .section-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .flashcard {
+            perspective: 1000px;
+            width: 100%;
+            height: 200px;
+        }
+        
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        
+        .flashcard-front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .flashcard-back {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            transform: rotateY(180deg);
+        }
+        
+        .quiz-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .quiz-option:hover {
+            background-color: #e0f2fe;
+            border-color: #0277bd;
+        }
+        
+        .quiz-option.correct {
+            background-color: #e8f5e8;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+        
+        .quiz-option.incorrect {
+            background-color: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+        }
+        
+        .progress-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.35s;
+            transform-origin: 50% 50%;
+        }
+        
+        .search-container {
+            position: relative;
+        }
+        
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        
+        .modal {
+            backdrop-filter: blur(5px);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .stats-widget {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="glass-card mx-4 mt-4 p-4">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <i class="fas fa-car text-2xl text-white"></i>
+                <h1 class="text-2xl font-bold text-white">Interactive Driving Study Hub</h1>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <!-- Search -->
+                <div class="search-container">
+                    <div class="relative">
+                        <input type="text" id="searchInput" placeholder="Search content..." 
+                               class="px-4 py-2 pl-10 pr-4 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:outline-none focus:ring-2 focus:ring-white/50">
+                        <i class="fas fa-search absolute left-3 top-3 text-white/70"></i>
+                    </div>
+                    <div id="searchResults" class="search-results hidden"></div>
+                </div>
+                
+                <!-- Stats -->
+                <div class="stats-widget text-center">
+                    <div class="text-sm opacity-90">Progress</div>
+                    <div id="overallProgress" class="text-xl font-bold">0%</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Loading State -->
+        <div id="loadingState" class="text-center py-12">
+            <div class="loading-spinner mx-auto mb-4"></div>
+            <p class="text-white text-lg">Loading study materials...</p>
+        </div>
+
+        <!-- Home View -->
+        <div id="homeView" class="hidden">
+            <!-- Tabs -->
+            <div class="glass-card p-6 mb-8">
+                <div class="flex space-x-1 mb-6">
+                    <button class="tab-button active px-6 py-3 rounded-lg font-medium" data-tab="sections">
+                        <i class="fas fa-book mr-2"></i>Study Sections
+                    </button>
+                    <button class="tab-button px-6 py-3 rounded-lg font-medium" data-tab="flashcards">
+                        <i class="fas fa-layer-group mr-2"></i>Flashcards
+                    </button>
+                    <button class="tab-button px-6 py-3 rounded-lg font-medium" data-tab="quiz">
+                        <i class="fas fa-question-circle mr-2"></i>Full Quiz
+                    </button>
+                    <button class="tab-button px-6 py-3 rounded-lg font-medium" data-tab="progress">
+                        <i class="fas fa-chart-line mr-2"></i>Progress
+                    </button>
+                </div>
+
+                <!-- Sections Tab -->
+                <div id="sectionsTab" class="tab-content active">
+                    <div id="sectionsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Sections will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Flashcards Tab -->
+                <div id="flashcardsTab" class="tab-content">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-white mb-2">Study Flashcards</h3>
+                        <p class="text-white/80">Click cards to flip and test your knowledge</p>
+                    </div>
+                    <div id="flashcardsContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Flashcards will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Quiz Tab -->
+                <div id="quizTab" class="tab-content">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-white mb-2">Full Knowledge Quiz</h3>
+                        <p class="text-white/80">Test your comprehensive understanding</p>
+                    </div>
+                    <div id="quizContainer">
+                        <!-- Quiz will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Progress Tab -->
+                <div id="progressTab" class="tab-content">
+                    <div class="text-center mb-6">
+                        <h3 class="text-2xl font-bold text-white mb-2">Your Learning Progress</h3>
+                        <p class="text-white/80">Track your study journey</p>
+                    </div>
+                    <div id="progressContainer" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Progress widgets will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section Detail View -->
+        <div id="sectionView" class="hidden">
+            <div class="glass-card p-8">
+                <button id="backButton" class="mb-6 px-4 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Sections
+                </button>
+                <div id="sectionContent">
+                    <!-- Section content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Quiz Results -->
+    <div id="resultsModal" class="fixed inset-0 bg-black/50 modal hidden items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-2xl max-w-md w-full mx-4">
+            <div class="text-center">
+                <div id="resultsIcon" class="text-6xl mb-4"></div>
+                <h3 id="resultsTitle" class="text-2xl font-bold mb-2"></h3>
+                <p id="resultsMessage" class="text-gray-600 mb-6"></p>
+    <div id="resultsStats" class="bg-gray-50 p-4 rounded-lg mb-6 overflow-y-auto max-h-60">
+        <!-- Stats will be inserted here -->
+    </div>
+    <button onclick="closeModal('resultsModal')" class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+        Continue Learning
+    </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_BASE = 'http://localhost:5001/api';
+        
+        // Global state
+        let sections = [];
+        let allQuestions = [];
+        let currentSection = null;
+        let userProgress = JSON.parse(localStorage.getItem('drivingProgress') || '{}');
+        
+        // Initialize the application
+document.addEventListener('DOMContentLoaded', async () => {
+            await loadData();
+            setupEventListeners();
+            renderHome();
+        });
+
+        async function loadSectionsContent() {
+            const sectionsEndpoint = `${API_BASE}/sections`;
+
+            const response = await fetch(sectionsEndpoint);
+            const sectionsContent = await response.json();
+            
+            sectionsContent.forEach((section, index) => {
+                sections[index].content = section.content;
+            });
+        }
+        
+        // Load data from API
+        async function loadData() {
+            try {
+                // Load sections
+                const sectionsResponse = await fetch(`${API_BASE}/sections`);
+                sections = await sectionsResponse.json();
+                
+                // Load all quiz questions
+                const quizResponse = await fetch(`${API_BASE}/quiz/all`);
+                allQuestions = await quizResponse.json();
+                
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('homeView').classList.remove('hidden');
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showError('Failed to load study materials. Please ensure the backend server is running.');
+            }
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Tab switching
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.addEventListener('click', () => switchTab(button.dataset.tab));
+            });
+            
+            // Search
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', debounce(handleSearch, 300));
+            
+            // Back button
+            document.getElementById('backButton').addEventListener('click', () => {
+                document.getElementById('sectionView').classList.add('hidden');
+                document.getElementById('homeView').classList.remove('hidden');
+            });
+            
+            // Click outside to close search results
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.search-container')) {
+                    document.getElementById('searchResults').classList.add('hidden');
+                }
+            });
+        }
+        
+        // Render home view
+        function renderHome() {
+            renderSections();
+            renderFlashcards();
+            renderFullQuiz();
+            renderProgress();
+            updateOverallProgress();
+        }
+        
+        // Render sections
+        function renderSections() {
+            const grid = document.getElementById('sectionsGrid');
+            grid.innerHTML = sections.map(section => `
+                <div class="section-card p-6" onclick="openSection(${section.id})">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex-1">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">${section.title}</h3>
+                            <p class="text-gray-600 text-sm">${section.content.substring(0, 100)}...</p>
+                        </div>
+                        <div class="ml-4">
+                            ${userProgress[section.id] ? '<i class="fas fa-check-circle text-green-500 text-xl"></i>' : '<i class="fas fa-play-circle text-blue-500 text-xl"></i>'}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">
+                            <i class="fas fa-clock mr-1"></i>~10 min read
+                        </span>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
+                            ${userProgress[section.id] ? 'Completed' : 'Start Learning'}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Render flashcards
+        function renderFlashcards() {
+            const container = document.getElementById('flashcardsContainer');
+            const flashcards = allQuestions.map(q => ({
+                front: q.question,
+                back: q.explanation
+            }));
+            
+            container.innerHTML = flashcards.map((card, index) => `
+                <div class="flashcard" onclick="flipCard(${index})">
+                    <div class="flashcard-inner" id="flashcard-${index}">
+                        <div class="flashcard-front">
+                            <p class="text-lg font-medium">${card.front}</p>
+                        </div>
+                        <div class="flashcard-back">
+                            <p class="text-base">${card.back}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Render full quiz
+        function renderFullQuiz() {
+            const container = document.getElementById('quizContainer');
+            if (allQuestions.length === 0) {
+                container.innerHTML = '<p class="text-white/80 text-center">No quiz questions available.</p>';
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="bg-white rounded-2xl p-8">
+                    <div class="text-center mb-8">
+                        <h4 class="text-2xl font-bold text-gray-800 mb-2">Comprehensive Quiz</h4>
+                        <p class="text-gray-600">${allQuestions.length} questions covering all topics</p>
+                    </div>
+                    <button onclick="startFullQuiz()" class="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-bold text-lg hover:from-blue-600 hover:to-purple-700 transition-all">
+                        <i class="fas fa-play mr-2"></i>Start Quiz
+                    </button>
+                </div>
+            `;
+        }
+        
+        // Render progress
+        function renderProgress() {
+            const container = document.getElementById('progressContainer');
+            const completedSections = Object.keys(userProgress).length;
+            const totalSections = sections.length;
+            const progressPercentage = totalSections > 0 ? (completedSections / totalSections) * 100 : 0;
+            
+            container.innerHTML = `
+                <div class="bg-white rounded-2xl p-6 text-center">
+                    <div class="progress-circle mx-auto mb-4">
+                        <svg class="progress-ring w-full h-full">
+                            <circle class="progress-ring-circle" stroke="#e5e7eb" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                            <circle class="progress-ring-circle" stroke="#3b82f6" stroke-width="8" fill="transparent" r="52" cx="60" cy="60" 
+                                    stroke-dasharray="326.73" stroke-dashoffset="${326.73 - (326.73 * progressPercentage) / 100}"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <span class="text-2xl font-bold text-gray-800">${Math.round(progressPercentage)}%</span>
+                        </div>
+                    </div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">Overall Progress</h4>
+                    <p class="text-gray-600">${completedSections} of ${totalSections} sections completed</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6">
+                    <h4 class="text-xl font-bold text-gray-800 mb-4">Recent Activity</h4>
+                    <div class="space-y-3">
+                        ${sections.slice(0, 3).map(section => `
+                            <div class="flex items-center justify-between py-2 border-b border-gray-100 last:border-b-0">
+                                <span class="text-gray-700">${section.title}</span>
+                                ${userProgress[section.id] ? 
+                                    '<i class="fas fa-check-circle text-green-500"></i>' : 
+                                    '<i class="fas fa-circle text-gray-300"></i>'
+                                }
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl p-6">
+                    <h4 class="text-xl font-bold text-gray-800 mb-4">Study Streak</h4>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-blue-500 mb-2">🔥</div>
+                        <div class="text-3xl font-bold text-gray-800">3</div>
+                        <div class="text-gray-600">Days in a row</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Switch tabs
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabName}Tab`).classList.add('active');
+        }
+        
+        // Open section
+        async function openSection(sectionId) {
+            currentSection = sections.find(s => s.id === sectionId);
+            if (!currentSection) return;
+            
+            // Get section-specific quiz questions
+            try {
+                const response = await fetch(`${API_BASE}/quiz/${sectionId}`);
+                const sectionQuestions = await response.json();
+                
+                document.getElementById('homeView').classList.add('hidden');
+                document.getElementById('sectionView').classList.remove('hidden');
+                
+                const content = document.getElementById('sectionContent');
+                content.innerHTML = `
+                    <div class="mb-8">
+                        <h2 class="text-4xl font-bold text-white mb-4">${currentSection.title}</h2>
+                        <div class="bg-white/10 rounded-xl p-6 mb-8">
+                            <p class="text-white/90 text-lg leading-relaxed">${currentSection.content}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl p-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6">Knowledge Check</h3>
+                        <div id="sectionQuiz">
+                            ${sectionQuestions.length > 0 ? renderSectionQuiz(sectionQuestions) : '<p class="text-gray-600">No questions available for this section.</p>'}
+                        </div>
+                        <div class="mt-8 text-center">
+                            <button onclick="markSectionComplete(${sectionId})" class="px-8 py-3 bg-green-500 text-white rounded-xl font-bold hover:bg-green-600 transition-colors">
+                                <i class="fas fa-check mr-2"></i>Mark as Complete
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Error loading section quiz:', error);
+            }
+        }
+        
+        // Render section quiz
+        function renderSectionQuiz(questions) {
+            return questions.map((q, index) => `
+                <div class="mb-8 p-6 bg-gray-50 rounded-xl" id="question-${index}">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">${q.question}</h4>
+                    <div class="space-y-3">
+                        ${q.options.map((option, optIndex) => `
+                            <button class="quiz-option w-full text-left p-4 border-2 border-gray-200 rounded-lg" 
+                                    onclick="answerQuestion(${index}, ${optIndex}, ${q.answer}, '${q.explanation}')">
+                                ${option}
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="feedback-${index}" class="mt-4 hidden"></div>
+                </div>
+            `).join('');
+        }
+        
+        // Answer question
+        function answerQuestion(questionIndex, selectedOption, correctAnswer, explanation) {
+            const questionDiv = document.getElementById(`question-${questionIndex}`);
+            const options = questionDiv.querySelectorAll('.quiz-option');
+            const feedback = document.getElementById(`feedback-${questionIndex}`);
+            
+            // Disable all options
+            options.forEach(opt => opt.disabled = true);
+            
+            // Show correct/incorrect styling
+            options[selectedOption].classList.add(selectedOption === correctAnswer ? 'correct' : 'incorrect');
+            if (selectedOption !== correctAnswer) {
+                options[correctAnswer].classList.add('correct');
+            }
+            
+            // Show feedback
+            feedback.classList.remove('hidden');
+            feedback.innerHTML = `
+                <div class="p-4 rounded-lg ${selectedOption === correctAnswer ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}">
+                    <div class="flex items-start">
+                        <i class="fas ${selectedOption === correctAnswer ? 'fa-check-circle text-green-500' : 'fa-times-circle text-red-500'} mt-1 mr-3"></i>
+                        <div>
+                            <div class="font-semibold ${selectedOption === correctAnswer ? 'text-green-800' : 'text-red-800'} mb-2">
+                                ${selectedOption === correctAnswer ? 'Correct!' : 'Incorrect'}
+                            </div>
+                            <p class="text-gray-700">${explanation}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Mark section as complete
+        function markSectionComplete(sectionId) {
+            userProgress[sectionId] = {
+                completed: true,
+                completedAt: new Date().toISOString()
+            };
+            localStorage.setItem('drivingProgress', JSON.stringify(userProgress));
+            updateOverallProgress();
+            
+            showSuccess('Section completed! Great job on your learning progress.');
+            
+            // Update the current view
+            renderSections();
+            renderProgress();
+        }
+        
+        // Start full quiz
+        function startFullQuiz() {
+            const container = document.getElementById('quizContainer');
+            const shuffledQuestions = shuffleArray([...allQuestions]).slice(0, 10); // Take 10 random questions
+            
+            let currentQuestionIndex = 0;
+            let score = 0;
+            let answers = [];
+            
+            function renderQuizQuestion() {
+                const question = shuffledQuestions[currentQuestionIndex];
+                container.innerHTML = `
+                    <div class="bg-white rounded-2xl p-8">
+                        <div class="flex justify-between items-center mb-6">
+                            <div class="text-sm text-gray-500">Question ${currentQuestionIndex + 1} of ${shuffledQuestions.length}</div>
+                            <div class="w-64 bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full transition-all" style="width: ${((currentQuestionIndex + 1) / shuffledQuestions.length) * 100}%"></div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="text-xl font-semibold text-gray-800 mb-6">${question.question}</h4>
+                        
+                        <div class="space-y-3" id="quizOptions">
+                            ${question.options.map((option, index) => `
+                                <button class="quiz-option w-full text-left p-4 border-2 border-gray-200 rounded-lg" 
+                                        onclick="selectQuizAnswer(${index})">
+                                    ${option}
+                                </button>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="mt-8 text-center">
+                            <button id="nextButton" class="px-8 py-3 bg-blue-500 text-white rounded-xl font-bold opacity-50 cursor-not-allowed" disabled>
+                                ${currentQuestionIndex === shuffledQuestions.length - 1 ? 'Finish Quiz' : 'Next Question'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            window.selectQuizAnswer = function(selectedIndex) {
+                const question = shuffledQuestions[currentQuestionIndex];
+                const options = document.querySelectorAll('#quizOptions .quiz-option');
+                const nextButton = document.getElementById('nextButton');
+                
+                // Disable all options
+                options.forEach(opt => opt.disabled = true);
+                
+                // Show correct answer
+                options[selectedIndex].classList.add(selectedIndex === question.answer ? 'correct' : 'incorrect');
+                if (selectedIndex !== question.answer) {
+                    options[question.answer].classList.add('correct');
+                }
+                
+                // Record answer
+                const isCorrect = selectedIndex === question.answer;
+                if (isCorrect) score++;
+                answers.push({
+                    question: question.question,
+                    selectedAnswer: question.options[selectedIndex],
+                    correctAnswer: question.options[question.answer],
+                    isCorrect: isCorrect
+                });
+                
+                // Enable next button
+                nextButton.disabled = false;
+                nextButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                nextButton.onclick = () => {
+                    currentQuestionIndex++;
+                    if (currentQuestionIndex < shuffledQuestions.length) {
+                        renderQuizQuestion();
+                    } else {
+                        showQuizResults();
+                    }
+                };
+            };
+            
+            function showQuizResults() {
+                const percentage = Math.round((score / shuffledQuestions.length) * 100);
+                const modal = document.getElementById('resultsModal');
+                const icon = document.getElementById('resultsIcon');
+                const title = document.getElementById('resultsTitle');
+                const message = document.getElementById('resultsMessage');
+                const stats = document.getElementById('resultsStats');
+                
+                if (percentage >= 80) {
+                    icon.innerHTML = '🎉';
+                    title.textContent = 'Excellent!';
+                    message.textContent = 'You have a strong understanding of driving concepts.';
+                } else if (percentage >= 60) {
+                    icon.innerHTML = '👍';
+                    title.textContent = 'Good Job!';
+                    message.textContent = 'You\'re on the right track. Keep studying!';
+                } else {
+                    icon.innerHTML = '📚';
+                    title.textContent = 'Keep Learning!';
+                    message.textContent = 'Review the materials and try again.';
+                }
+                
+                stats.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <span>Score:</span>
+                        <span class="font-bold">${score}/${shuffledQuestions.length} (${percentage}%)</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span>Time:</span>
+                        <span class="font-bold">${Math.floor(Math.random() * 5) + 3} minutes</span>
+                    </div>
+                `;
+                
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+            
+renderQuizQuestion();
+
+            window.selectQuizAnswer = function(selectedIndex) {
+                const question = shuffledQuestions[currentQuestionIndex];
+                const options = document.querySelectorAll('#quizOptions .quiz-option');
+                const nextButton = document.getElementById('nextButton');
+                
+                // Disable all options
+                options.forEach(opt => opt.disabled = true);
+                
+                // Show correct answer
+                options[selectedIndex].classList.add(selectedIndex === question.answer ? 'correct' : 'incorrect');
+                if (selectedIndex !== question.answer) {
+                    options[question.answer].classList.add('correct');
+                }
+                
+                // Record answer
+                const isCorrect = selectedIndex === question.answer;
+                if (isCorrect) score++;
+                answers.push({
+                    question: question.question,
+                    selectedAnswer: question.options[selectedIndex],
+                    correctAnswer: question.options[question.answer],
+                    isCorrect: isCorrect,
+                    explanation: question.explanation
+                });
+                
+                // Enable next button
+                nextButton.disabled = false;
+                nextButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                nextButton.onclick = () => {
+                    currentQuestionIndex++;
+                    if (currentQuestionIndex < shuffledQuestions.length) {
+                        renderQuizQuestion();
+                    } else {
+                        showQuizResults();
+                    }
+                };
+            };
+
+            function showQuizResults() {
+                const percentage = Math.round((score / shuffledQuestions.length) * 100);
+                const modal = document.getElementById('resultsModal');
+                const icon = document.getElementById('resultsIcon');
+                const title = document.getElementById('resultsTitle');
+                const message = document.getElementById('resultsMessage');
+                const stats = document.getElementById('resultsStats');
+                
+                if (percentage >= 80) {
+                    icon.innerHTML = '🎉';
+                    title.textContent = 'Excellent!';
+                    message.textContent = 'You have a strong understanding of driving concepts.';
+                } else if (percentage >= 60) {
+                    icon.innerHTML = '👍';
+                    title.textContent = 'Good Job!';
+                    message.textContent = 'You\'re on the right track. Keep studying!';
+                } else {
+                    icon.innerHTML = '📚';
+                    title.textContent = 'Keep Learning!';
+                    message.textContent = 'Review the materials and try again.';
+                }
+                
+                stats.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <span>Score:</span>
+                        <span class="font-bold">${score}/${shuffledQuestions.length} (${percentage}%)</span>
+                    </div>
+                    ${answers.map((answer, i) => `
+                        <div class="border-t pt-2 mt-4">
+                            <div class="font-semibold">Q${i + 1}: ${answer.question}</div>
+                            <div>Your Answer: ${answer.selectedAnswer}</div>
+                            <div class="${answer.isCorrect ? 'text-green-600' : 'text-red-600'} font-semibold">Explanation: ${answer.explanation}</div>
+                        </div>`).join('')}`;
+                
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+
+            loadSectionsContent();
+        }
+        
+        // Flip flashcard
+        function flipCard(index) {
+            const card = document.getElementById(`flashcard-${index}`);
+            card.parentElement.classList.toggle('flipped');
+        }
+        
+        // Handle search
+        async function handleSearch(e) {
+            const query = e.target.value.trim();
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (query.length < 2) {
+                resultsContainer.classList.add('hidden');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}`);
+                const results = await response.json();
+                
+                if (results.length > 0) {
+                    resultsContainer.innerHTML = results.map(result => `
+                        <div class="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0" 
+                             onclick="openSection(${result.id})">
+                            <div class="font-semibold text-gray-800">${result.title}</div>
+                            <div class="text-sm text-gray-600">${result.content.substring(0, 100)}...</div>
+                        </div>
+                    `).join('');
+                    resultsContainer.classList.remove('hidden');
+                } else {
+                    resultsContainer.innerHTML = '<div class="p-3 text-gray-500 text-center">No results found</div>';
+                    resultsContainer.classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Search error:', error);
+            }
+        }
+        
+        // Update overall progress
+        function updateOverallProgress() {
+            const completedSections = Object.keys(userProgress).length;
+            const totalSections = sections.length;
+            const percentage = totalSections > 0 ? Math.round((completedSections / totalSections) * 100) : 0;
+            
+            document.getElementById('overallProgress').textContent = `${percentage}%`;
+        }
+        
+        // Utility functions
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        
+        function showSuccess(message) {
+            // Simple success notification (you could enhance this)
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        function showError(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

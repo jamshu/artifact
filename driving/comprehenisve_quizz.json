@@ -1,0 +1,359 @@
+[
+    {
+        "section_id": 1,
+        "question": "Which of the following is a key part of being a physically and mentally fit driver?",
+        "options": ["Driving for long hours without breaks", "Being free from fatigue and stress", "Knowing the fastest routes", "Having a new car"],
+        "answer": 1,
+        "explanation": "A driver's fitness is crucial for safety. This includes being well-rested and not under the influence of any substances or emotional distress."
+    },
+    {
+        "section_id": 1,
+        "question": "What is the core principle of 'cooperative driving'?",
+        "options": ["Insisting on your right of way", "Racing other drivers", "Showing courtesy and communicating with other road users", "Driving very slowly"],
+        "answer": 2,
+        "explanation": "Cooperative driving involves being courteous, using signals, and working with others on the road to ensure a safe and smooth flow of traffic."
+    },
+    {
+        "section_id": 1,
+        "question": "Which document is NOT legally required to be carried by a driver in their vehicle?",
+        "options": ["Driver's License", "Vehicle Registration (Istimara)", "Vehicle's original purchase receipt", "Valid Insurance Certificate"],
+        "answer": 2,
+        "explanation": "A driver must always carry their license, registration, and proof of insurance. The purchase receipt is not required for daily operation."
+    },
+    {
+        "section_id": 1,
+        "question": "A defensive driver is one who:",
+        "options": ["Drives slowly at all times", "Is prepared for the incorrect actions of other drivers", "Only follows the rules when police are visible", "Uses the horn often"],
+        "answer": 1,
+        "explanation": "Defensive driving is about anticipating potential hazards and mistakes from others to avoid accidents."
+    },
+    {
+        "section_id": 2,
+        "question": "When should you use your vehicle's hazard warning lights?",
+        "options": ["When parking illegally for a short time", "To thank another driver", "When your vehicle is stationary and causing a temporary obstruction or hazard", "When driving in heavy rain"],
+        "answer": 2,
+        "explanation": "Hazard lights are for emergencies to warn other drivers that your vehicle is a potential hazard, for example, if you have broken down."
+    },
+    {
+        "section_id": 2,
+        "question": "What is the primary purpose of an Anti-lock Braking System (ABS)?",
+        "options": ["To make the car stop faster in all conditions", "To prevent the wheels from locking up during hard braking, allowing the driver to maintain steering control", "To automatically apply the brakes", "To reduce fuel consumption"],
+        "answer": 1,
+        "explanation": "ABS prevents skidding during emergency braking by modulating brake pressure, which allows the driver to continue steering around an obstacle."
+    },
+    {
+        "section_id": 2,
+        "question": "Who is required to wear a seatbelt in a moving vehicle?",
+        "options": ["Only the driver", "Only front-seat passengers", "Only passengers in the back", "The driver and all passengers"],
+        "answer": 3,
+        "explanation": "Saudi Arabian law requires the driver and all passengers, in both front and back seats, to wear a seatbelt."
+    },
+    {
+        "section_id": 2,
+        "question": "A red warning light on your dashboard (like the oil pressure or battery light) means you should:",
+        "options": ["Check it at your next service appointment", "Ignore it if the car feels normal", "Stop the car safely as soon as possible and investigate the problem", "Drive to the nearest mechanic immediately"],
+        "answer": 2,
+        "explanation": "A red warning light indicates a serious problem that requires immediate attention. Continuing to drive could cause severe damage or a safety risk."
+    },
+    {
+        "section_id": 3,
+        "question": "If you double your speed from 50 km/h to 100 km/h, your braking distance will be:",
+        "options": ["Twice as long", "Three times as long", "Four times as long", "The same"],
+        "answer": 2,
+        "explanation": "Braking distance is proportional to the square of the speed. Doubling the speed increases the braking distance by a factor of four."
+    },
+    {
+        "section_id": 3,
+        "question": "What is 'Reaction Distance'?",
+        "options": ["The distance it takes for the brakes to work", "The distance the car travels after you hit the brakes", "The distance the car travels from when you see a hazard to when you start braking", "The distance from your car to the car in front"],
+        "answer": 2,
+        "explanation": "Reaction distance is the distance covered during the time it takes for a driver to perceive a hazard and physically start applying the brakes."
+    },
+    {
+        "section_id": 3,
+        "question": "On a wet road, your stopping distance will be:",
+        "options": ["Shorter", "The same as a dry road", "Longer than a dry road", "Dependent on the car's color"],
+        "answer": 2,
+        "explanation": "Water on the road reduces friction between the tires and the surface, significantly increasing the distance required to stop."
+    },
+    {
+        "section_id": 4,
+        "question": "What does a solid white line in the middle of the road mean?",
+        "options": ["You may overtake if it's clear", "It marks the edge of the road", "Lane changing and overtaking are not permitted", "This is a temporary marking"],
+        "answer": 2,
+        "explanation": "A solid white line indicates that you must not cross it, meaning overtaking or changing lanes across the line is prohibited."
+    },
+    {
+        "section_id": 4,
+        "question": "What is the 'shoulder' of a road used for?",
+        "options": ["Regular driving", "Overtaking slower vehicles", "Emergencies, breakdowns, or stopping when required by police", "Parking"],
+        "answer": 2,
+        "explanation": "The shoulder is a reserved area at the edge of the road for emergency situations only, not for general traffic."
+    },
+    {
+        "section_id": 4,
+        "question": "A yellow line at the edge of the road indicates:",
+        "options": ["The start of a no-overtaking zone", "The edge of the carriageway", "A temporary detour", "A bus lane"],
+        "answer": 1,
+        "explanation": "A yellow line is used to mark the edge of the main traveled portion of the road."
+    },
+    {
+        "section_id": 4,
+        "question": "What must you do when you approach a yellow box junction?",
+        "options": ["Stop inside the box", "Enter the box only if your exit is clear", "Speed up to clear the box quickly", "Honk before entering"],
+        "answer": 1,
+        "explanation": "You must not enter a yellow box junction unless your exit path is clear, to avoid blocking the intersection for cross-traffic."
+    },
+    {
+        "section_id": 5,
+        "question": "You see a triangular sign with a picture of a deer. What does it mean?",
+        "options": ["A zoo is nearby", "Hunting is allowed", "Warning: Wild animals may cross the road", "A mandatory stop"],
+        "answer": 2,
+        "explanation": "This is a standard warning sign indicating a high probability of wild animals, such as deer or camels, crossing the road ahead."
+    },
+    {
+        "section_id": 5,
+        "question": "What does a circular sign with a red border and the number '80' mean?",
+        "options": ["The minimum speed is 80 km/h", "The maximum speed limit is 80 km/h", "You are on Route 80", "You should drive at exactly 80 km/h"],
+        "answer": 1,
+        "explanation": "This is a regulatory sign indicating the maximum legal speed for this section of the road is 80 km/h."
+    },
+    {
+        "section_id": 5,
+        "question": "A blue circular sign with a white arrow pointing straight ahead means:",
+        "options": ["You must turn left or right", "You may go straight or turn", "You must proceed straight ahead only", "A one-way street ends"],
+        "answer": 2,
+        "explanation": "This is a mandatory sign. It obligates the driver to follow the direction indicated by the arrow."
+    },
+    {
+        "section_id": 5,
+        "question": "A circular sign with a red border and a car symbol with a line through it means:",
+        "options": ["No parking", "No entry for motor vehicles", "End of motor vehicle restriction", "Cars must stop here"],
+        "answer": 1,
+        "explanation": "This prohibitory sign indicates that motor vehicles are not allowed to enter this road or area."
+    },
+    {
+        "section_id": 6,
+        "question": "What should you do when approaching a traffic light that is flashing red?",
+        "options": ["Proceed with caution without stopping", "Stop, then proceed when it is safe to do so", "Speed up to clear the intersection", "The light is broken; find another route"],
+        "answer": 1,
+        "explanation": "A flashing red light has the same meaning as a STOP sign. You must come to a full stop and only proceed when the way is clear."
+    },
+    {
+        "section_id": 6,
+        "question": "What is the primary purpose of green and blue rectangular guide signs?",
+        "options": ["To warn of dangers", "To enforce a speed limit", "To provide directional information and distances", "To indicate a work zone"],
+        "answer": 2,
+        "explanation": "Guide signs help drivers navigate by providing information about routes, destinations, and points of interest."
+    },
+    {
+        "section_id": 6,
+        "question": "An orange, diamond-shaped sign indicates:",
+        "options": ["A permanent hazard", "A school zone", "A temporary work zone or construction area", "A scenic route"],
+        "answer": 2,
+        "explanation": "Orange is the standard color for signs in temporary work zones, warning drivers of potential hazards and changes in traffic patterns."
+    },
+    {
+        "section_id": 7,
+        "question": "You arrive at an intersection with a STOP sign. What is the correct procedure?",
+        "options": ["Slow down and proceed if no one is coming", "Stop only if you see other cars", "Come to a complete stop before the line, then proceed when safe", "Honk your horn and then proceed"],
+        "answer": 2,
+        "explanation": "A STOP sign requires a full and complete stop, regardless of the traffic situation. You must yield to all other traffic and pedestrians."
+    },
+    {
+        "section_id": 7,
+        "question": "When entering a roundabout, who has the right of way?",
+        "options": ["The vehicle entering the roundabout", "The larger vehicle", "Traffic already circulating within the roundabout", "The vehicle on the right"],
+        "answer": 2,
+        "explanation": "You must yield to vehicles that are already inside the roundabout. Enter only when there is a safe gap in the traffic flow."
+    },
+    {
+        "section_id": 7,
+        "question": "Two cars arrive at a four-way intersection without signs at the same time. One is on your right. Who should go first?",
+        "options": ["You should go first", "The car on your right should go first", "Whoever is driving faster", "The driver who honks first"],
+        "answer": 1,
+        "explanation": "At an uncontrolled intersection, you must yield the right of way to the vehicle approaching from your right."
+    },
+    {
+        "section_id": 7,
+        "question": "What does a triangular 'Yield' sign mean?",
+        "options": ["You have the right of way", "You must stop completely", "You must slow down, be prepared to stop, and give way to other traffic", "The road ahead is closed"],
+        "answer": 2,
+        "explanation": "A Yield sign means you must let other road users go first. You are not required to stop if the way is clear, but you must be ready to."
+    },
+    {
+        "section_id": 8,
+        "question": "What is the correct action when an ambulance approaches from behind with its siren and lights on?",
+        "options": ["Speed up to stay ahead of it", "Maintain your speed and lane position", "Safely pull over to the right side of the road and stop", "Brake suddenly"],
+        "answer": 2,
+        "explanation": "The law requires you to yield to emergency vehicles by moving to the right and stopping to allow them to pass safely."
+    },
+    {
+        "section_id": 8,
+        "question": "At a marked pedestrian crossing (zebra crossing), what must a driver do?",
+        "options": ["Honk to warn pedestrians", "Maintain speed as vehicles have priority", "Slow down and give way to any pedestrian on or waiting to cross", "Overtake any car that has stopped for pedestrians"],
+        "answer": 2,
+        "explanation": "Drivers must yield the right of way to pedestrians at marked crossings. It is a serious offense not to."
+    },
+    {
+        "section_id": 8,
+        "question": "On a narrow mountain road, which vehicle has the right of way?",
+        "options": ["The vehicle going downhill", "The vehicle going uphill", "The larger vehicle", "The faster vehicle"],
+        "answer": 1,
+        "explanation": "The vehicle traveling uphill has priority because it is more difficult for it to stop and restart on an incline."
+    },
+    {
+        "section_id": 9,
+        "question": "What is the correct 'MSM' routine for changing lanes?",
+        "options": ["Manoeuvre, Signal, Mirror", "Mirror, Signal, Manoeuvre", "Signal, Manoeuvre, Signal", "Mirror, Speed up, Manoeuvre"],
+        "answer": 1,
+        "explanation": "The correct, safe sequence is to first check your Mirrors, then Signal your intention, and finally Manoeuvre (including a blind spot check) when it is safe."
+    },
+    {
+        "section_id": 9,
+        "question": "In which of these situations is overtaking prohibited?",
+        "options": ["On a long, straight highway with clear visibility", "When the car in front is driving below the speed limit", "When approaching a pedestrian crossing or an intersection", "On a road with a broken white line"],
+        "answer": 2,
+        "explanation": "Overtaking is forbidden in areas with high potential for conflict, such as intersections, crossings, hills, and curves, to prevent collisions."
+    },
+    {
+        "section_id": 9,
+        "question": "What is a 'blind spot' in a vehicle?",
+        "options": ["The area directly in front of the car", "An area around the vehicle that cannot be seen in the mirrors", "The area seen through the rear-view mirror", "The glove compartment"],
+        "answer": 1,
+        "explanation": "Blind spots are areas that are obscured from the driver's view and require a physical head check to see."
+    },
+    {
+        "section_id": 10,
+        "question": "Where is it illegal to park your vehicle?",
+        "options": ["In a designated parking bay", "More than 50 meters from an intersection", "On a bridge or in a tunnel", "On the right side of a two-way street"],
+        "answer": 2,
+        "explanation": "Parking on a bridge or in a tunnel is strictly prohibited as it creates a serious obstruction and safety hazard."
+    },
+    {
+        "section_id": 10,
+        "question": "What is the most important action to take before reversing your car?",
+        "options": ["Turn on the radio", "Signal left", "Ensure the path behind you is completely clear by looking in mirrors and over your shoulder", "Honk your horn three times"],
+        "answer": 2,
+        "explanation": "Safety is paramount when reversing. You must have a full 360-degree awareness and confirm the path is clear of pedestrians and obstacles."
+    },
+    {
+        "section_id": 10,
+        "question": "When parking on a hill facing downhill, you should turn your wheels:",
+        "options": ["Towards the curb/side of the road", "Away from the curb/side of the road", "Straight ahead", "It does not matter"],
+        "answer": 0,
+        "explanation": "Turning the wheels towards the curb ensures that if the brakes fail, the car will roll into the curb and stop, not into traffic."
+    },
+    {
+        "section_id": 11,
+        "question": "When driving in heavy fog, which lights should you use?",
+        "options": ["High beam headlights", "Low beam headlights", "Hazard lights", "No lights"],
+        "answer": 1,
+        "explanation": "High beams reflect off the fog and worsen visibility. Low beams are directed downwards and help you see the road surface without causing glare."
+    },
+    {
+        "section_id": 11,
+        "question": "If you are involved in an accident where someone is injured, what is the first thing you should do?",
+        "options": ["Move your car immediately", "Exchange insurance details", "Call 997 for the Red Crescent (ambulance) and do not move the injured person", "Take photos for evidence"],
+        "answer": 2,
+        "explanation": "Human life is the top priority. The first action must be to call for emergency medical help. Do not move an injured person unless they are in immediate danger (e.g., from fire)."
+    },
+    {
+        "section_id": 11,
+        "question": "What is 'aquaplaning' or 'hydroplaning'?",
+        "options": ["A method for cleaning your car", "When a layer of water builds between the tires and the road surface, leading to a loss of traction", "Driving a boat on the road", "A type of off-road driving"],
+        "answer": 1,
+        "explanation": "Aquaplaning is extremely dangerous as the driver loses control of steering and braking. To avoid it, reduce speed on wet roads."
+    },
+    {
+        "section_id": 12,
+        "question": "What is the penalty for using a hand-held mobile phone while driving?",
+        "options": ["A verbal warning", "A fine and points on your license", "Community service", "A mandatory driving course"],
+        "answer": 1,
+        "explanation": "Using a mobile phone while driving is a violation that carries both a monetary fine and demerit points against your license."
+    },
+    {
+        "section_id": 12,
+        "question": "Accumulating how many points in one Hijri year results in a driver's license being withdrawn for the first time?",
+        "options": ["12 points", "18 points", "24 points", "36 points"],
+        "answer": 2,
+        "explanation": "The threshold for license withdrawal is 24 points. This triggers a suspension of driving privileges."
+    },
+    {
+        "section_id": 12,
+        "question": "What is the violation known as 'Tafheet' or drifting?",
+        "options": ["A type of parking", "Driving a vehicle at a high speed in a sideways, sliding manner", "Driving with loud music", "Not using turn signals"],
+        "answer": 1,
+        "explanation": "Drifting is an extremely dangerous and illegal maneuver that is treated as a major traffic offense with severe penalties."
+    },
+    {
+        "section_id": 12,
+        "question": "Exceeding the speed limit by more than 25 km/h is considered:",
+        "options": ["A minor infraction", "A serious violation with significant fines and points", "Acceptable if traffic is light", "Only a violation in school zones"],
+        "answer": 1,
+        "explanation": "Exceeding the speed limit is a serious offense, and the penalties increase significantly the faster you go over the limit."
+    },
+    {
+        "section_id": 13,
+        "question": "When entering a highway, you should:",
+        "options": ["Stop at the end of the ramp and wait for a gap", "Use the acceleration lane to match the speed of traffic before merging", "Merge immediately at a slow speed", "Expect highway traffic to slow down for you"],
+        "answer": 1,
+        "explanation": "The acceleration lane is designed to allow you to get up to the speed of highway traffic for a safe and smooth merge."
+    },
+    {
+        "section_id": 13,
+        "question": "On a three-lane highway, which lane should you normally use for cruising?",
+        "options": ["The far-left lane", "The middle or right-hand lanes", "Any lane is fine", "The shoulder"],
+        "answer": 1,
+        "explanation": "General lane discipline dictates that you should keep to the right and use the left lanes for overtaking other vehicles."
+    },
+    {
+        "section_id": 13,
+        "question": "What is a safe following distance on a highway under good conditions?",
+        "options": ["One car length", "One second", "At least three seconds", "As close as possible"],
+        "answer": 2,
+        "explanation": "At higher speeds, a greater distance is needed to react to hazards. A three-second gap provides a safer buffer."
+    },
+    {
+        "section_id": 14,
+        "question": "What is the primary purpose of the traffic violation points system?",
+        "options": ["To generate revenue from fines", "To identify and penalize habitually dangerous drivers", "To track vehicle locations", "To reward good drivers"],
+        "answer": 1,
+        "explanation": "The points system is a tool to improve road safety by identifying repeat offenders and removing them from the road if necessary."
+    },
+    {
+        "section_id": 14,
+        "question": "If a driver's license is withdrawn for the third time due to point accumulation, how long is the suspension?",
+        "options": ["3 months", "6 months", "1 year", "It is permanently revoked"],
+        "answer": 2,
+        "explanation": "The penalties escalate with repeated offenses. A third withdrawal results in a one-year suspension of the license."
+    },
+    {
+        "section_id": 15,
+        "question": "In a minor accident with no injuries and insured vehicles, who should you call?",
+        "options": ["The Police (999)", "The Ambulance (997)", "Najm (920000560)", "Your family"],
+        "answer": 2,
+        "explanation": "Najm is the designated authority for handling reported accidents for insured vehicles in Saudi Arabia."
+    },
+    {
+        "section_id": 15,
+        "question": "If you are the first to arrive at an accident scene where people are injured, what should you NOT do?",
+        "options": ["Turn on your hazard lights", "Call 997", "Move the injured people out of their cars immediately", "Check for any immediate dangers like fire"],
+        "answer": 2,
+        "explanation": "Unless there is an immediate, life-threatening danger like a fire, you should not move an injured person as it could worsen their injuries. Wait for trained medical personnel."
+    },
+    {
+        "section_id": 16,
+        "question": "What is 'Fahas'?",
+        "options": ["A type of driver's license", "A brand of car tire", "The mandatory Periodic Technical Inspection for vehicles", "A traffic violation"],
+        "answer": 2,
+        "explanation": "Fahas is the official, mandatory vehicle inspection program in Saudi Arabia to ensure vehicles are roadworthy and meet safety standards."
+    },
+    {
+        "section_id": 16,
+        "question": "A valid Fahas certificate is required to:",
+        "options": ["Get a driver's license", "Buy a new car", "Renew your vehicle's registration (Istimara)", "Drive on highways"],
+        "answer": 2,
+        "explanation": "You cannot renew your Istimara without passing the Fahas inspection, making it a critical part of legal vehicle ownership."
+    }
+]

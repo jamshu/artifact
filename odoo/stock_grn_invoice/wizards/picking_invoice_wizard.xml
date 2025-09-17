@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <record id="view_picking_invoice_wizard" model="ir.ui.view">
+            <field name="name">picking.invoice.wizard</field>
+            <field name="model">picking.invoice.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Create Bill">
+                    <group>
+                        <field name="order_ids" invisible="1"/>
+                        <field name="stock_picking_ids" widget="many2many_checkboxes" options="{'no_create_edit': True}" required="1"/>
+                    </group>
+                    <footer>
+                        <button string="Create Bill" type="object" name="create_account_move" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

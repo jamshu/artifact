@@ -1,0 +1,100 @@
+[
+    {
+        "section_id": 59,
+        "question": "What is the minimum age to obtain a private driving license in Saudi Arabia?",
+        "options": ["16 years", "18 years", "20 years", "22 years"],
+        "answer": 1,
+        "explanation": "The minimum age requirement for a private driving license is 18 years."
+    },
+    {
+        "section_id": 59,
+        "question": "How many years is a public driving license valid for in Saudi Arabia?",
+        "options": ["3 years", "5 years", "7 years", "10 years"],
+        "answer": 1,
+        "explanation": "A public driving license is valid for a maximum of 5 years."
+    },
+    {
+        "section_id": 60,
+        "question": "What is 'stopping distance' comprised of?",
+        "options": ["Braking Distance only", "Reaction Distance only", "The sum of Braking and Reaction Distances", "Speed multiplied by time"],
+        "answer": 2,
+        "explanation": "Stopping distance is the sum of Reaction Distance and Braking Distance."
+    },
+    {
+        "section_id": 61,
+        "question": "Which number should you call in case of a traffic accident in Saudi Arabia?",
+        "options": ["999", "997", "993", "911"],
+        "answer": 3,
+        "explanation": "For traffic accidents, you should call 911 or 993."
+    },
+    {
+        "section_id": 42,
+        "question": "What happens if you exceed the speed limit by more than 20 km/h?",
+        "options": ["You will receive a warning", "You will be fined", "Nothing happens", "You get a reward for fast driving"],
+        "answer": 1,
+        "explanation": "Exceeding the speed limit by more than 20 km/h will result in a fine according to Saudi traffic laws."
+    },
+    {
+        "section_id": 42,
+        "question": "What should you do if an emergency vehicle approaches you?",
+        "options": ["Speed up to get out of the way", "Ignore it", "Safely pull over to let it pass", "Race it"],
+        "answer": 2,
+        "explanation": "You should safely pull over to allow emergency vehicles to pass as they have the highest priority on roads."
+    },
+    {
+        "section_id": 43,
+        "question": "What is the minimum age required to obtain a driver's license in Saudi Arabia?",
+        "options": ["16 years", "18 years", "21 years", "25 years"],
+        "answer": 1,
+        "explanation": "The minimum age to obtain a driver's license in Saudi Arabia is 18 years."
+    },
+    {
+        "section_id": 43,
+        "question": "What should a driver carry at all times while driving?",
+        "options": ["National ID only", "Driver's license, vehicle registration, and insurance", "Only driver's license", "None of the above"],
+        "answer": 1,
+        "explanation": "A driver must carry a valid driver's license, vehicle registration, and insurance at all times."
+    },
+    {
+        "section_id": 44,
+        "question": "What is the importance of checking your vehicle before driving?",
+        "options": ["No importance", "To ensure safety", "To impress others", "To waste time"],
+        "answer": 1,
+        "explanation": "Performing pre-drive checks ensures the vehicle is safe for operation, reducing breakdowns and accidents."
+    },
+    {
+        "section_id": 44,
+        "question": "What lights should you use during heavy rain or fog?",
+        "options": ["High beam headlights", "Low beam headlights", "Hazard lights", "No lights"],
+        "answer": 1,
+        "explanation": "Low beam headlights are recommended during rain or fog to improve visibility and reduce glare."
+    },
+    {
+        "section_id": 45,
+        "question": "What factors affect stopping distance?",
+        "options": ["Weight of the vehicle only", "Tire pressure only", "Speed, reaction time, and road conditions", "None of the above"],
+        "answer": 2,
+        "explanation": "Stopping distance is affected by speed, reaction time, and road conditions like wet or icy surfaces."
+    },
+    {
+        "section_id": 45,
+        "question": "Why is reaction time important in driving?",
+        "options": ["It is not important", "For calculating stopping distance", "To slow down traffic", "To increase speed"],
+        "answer": 1,
+        "explanation": "Reaction time is crucial for calculating stopping distance and ensuring timely actions in emergencies."
+    },
+    {
+        "section_id": 46,
+        "question": "What does a solid white line on the road mean?",
+        "options": ["You may overtake", "Do not cross", "Parking allowed", "Road ends"],
+        "answer": 1,
+        "explanation": "A solid white line indicates that crossing is not permitted, and the lane should not be changed."
+    },
+    {
+        "section_id": 46,
+        "question": "How should you react when approaching a pedestrian crossing?",
+        "options": ["Accelerate through it", "Sound the horn", "Slow down and be prepared to stop", "Ignore pedestrians"],
+        "answer": 2,
+        "explanation": "When approaching a pedestrian crossing, you must slow down and be prepared to stop for pedestrians."
+    }
+]

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Circular Reference Fix</title>
+</head>
+<body>
+    <h1>Test Circular Reference Fix</h1>
+    <p>Open browser console to see test results...</p>
+    
+    <button onclick="testCircularReference()">Test Circular Reference Handling</button>
+    <button onclick="testComplexObject()">Test Complex Object Logging</button>
+    <button onclick="testPOSLikeObject()">Test POS-like Object</button>
+    
+    <script>
+        // Simulate the safe JSON stringify method
+        function safeJSONStringify(obj) {
+            try {
+                const seen = new Set();
+                
+                return JSON.stringify(obj, function(key, value) {
+                    try {
+                        // Handle circular references
+                        if (typeof value === 'object' && value !== null) {
+                            if (seen.has(value)) {
+                                return '[Circular Reference]';
+                            }
+                            seen.add(value);
+                        }
+                        
+                        // Handle functions
+                        if (typeof value === 'function') {
+                            return '[Function]';
+                        }
+                        
+                        // Handle undefined
+                        if (value === undefined) {
+                            return '[Undefined]';
+                        }
+                        
+                        // Skip problematic keys
+                        if (typeof key === 'string' && (
+                            key.startsWith('_') || 
+                            key.startsWith('$') ||
+                            key.includes('dispatcher') ||
+                            key.includes('callback') ||
+                            key.includes('event') ||
+                            key.includes('parent') ||
+                            key.includes('owner') ||
+                            key.includes('pos') ||
+                            key.includes('order') ||
+                            key.includes('Class') ||
+                            key.includes('source') ||
+                            key.includes('target') ||
+                            key.toLowerCase().includes('circular')
+                        )) {
+                            return '[Skipped - Potential Circular Reference]';
+                        }
+                        
+                        return value;
+                    } catch (e) {
+                        return '[Serialization Error]';
+                    }
+                });
+            } catch (error) {
+                return JSON.stringify({
+                    error: 'JSON serialization failed',
+                    message: error.message,
+                    originalType: typeof obj
+                });
+            }
+        }
+        
+        function testCircularReference() {
+            console.log('=== Testing Circular Reference Handling ===');
+            
+            // Create objects with circular references
+            const obj1 = { name: 'obj1' };
+            const obj2 = { name: 'obj2' };
+            obj1.ref = obj2;
+            obj2.ref = obj1; // Circular reference
+            
+            const testData = {
+                message: 'Test with circular reference',
+                data: obj1,
+                array: [obj1, obj2],
+                nested: {
+                    deep: {
+                        circular: obj1
+                    }
+                }
+            };
+            
+            try {
+                const result = safeJSONStringify(testData);
+                console.log('✅ Circular reference handled successfully:');
+                console.log(result);
+            } catch (error) {
+                console.error('❌ Failed to handle circular reference:', error);
+            }
+        }
+        
+        function testComplexObject() {
+            console.log('=== Testing Complex Object Logging ===');
+            
+            const complexObj = {
+                id: 123,
+                name: 'Test Object',
+                _privateProperty: 'should be skipped',
+                $specialProperty: 'should be skipped',
+                __edispatcherEvents: 'should be skipped',
+                callback_function: function() { return 'test'; },
+                regularFunction: () => 'arrow function',
+                undefined_value: undefined,
+                null_value: null,
+                date: new Date(),
+                array: [1, 2, 3, { nested: 'value' }],
+                nested: {
+                    level1: {
+                        level2: {
+                            value: 'deep nested'
+                        }
+                    }
+                }
+            };
+            
+            try {
+                const result = safeJSONStringify(complexObj);
+                console.log('✅ Complex object handled successfully:');
+                console.log(result);
+            } catch (error) {
+                console.error('❌ Failed to handle complex object:', error);
+            }
+        }
+        
+        function testPOSLikeObject() {
+            console.log('=== Testing POS-like Object ===');
+            
+            // Simulate a POS-like object with potential circular references
+            const posLikeObj = {
+                component: 'payment',
+                level: 'ERROR',
+                message: 'Test POS error',
+                data: {
+                    order_id: '12345',
+                    payment_status: 'failed',
+                    context: {
+                        type: 'unhandled_promise_rejection',
+                        error_name: 'TypeError',
+                        error_message: 'Test error',
+                        // Simulate problematic properties
+                        _callbacks: { handler: function() {} },
+                        __edispatcherEvents: { 
+                            event1: { source: null }
+                        },
+                        pos_reference: null,
+                        order_reference: null,
+                        parent_element: null
+                    }
+                },
+                timestamp: new Date().toISOString(),
+                url: window.location.href
+            };
+            
+            // Create circular reference
+            posLikeObj.data.context.pos_reference = posLikeObj;
+            posLikeObj.data.context.__edispatcherEvents.event1.source = posLikeObj.data;
+            
+            try {
+                const result = safeJSONStringify(posLikeObj);
+                console.log('✅ POS-like object handled successfully:');
+                console.log(result);
+            } catch (error) {
+                console.error('❌ Failed to handle POS-like object:', error);
+            }
+        }
+        
+        // Run initial test
+        console.log('🔄 Circular Reference Fix Test Environment Ready');
+        console.log('Use the buttons above to test different scenarios');
+        
+        // Test standard JSON.stringify failure
+        console.log('=== Demonstrating Standard JSON.stringify Failure ===');
+        const circularObj = {};
+        circularObj.self = circularObj;
+        
+        try {
+            JSON.stringify(circularObj);
+        } catch (error) {
+            console.log('❌ Standard JSON.stringify failed as expected:', error.message);
+        }
+        
+        try {
+            const safeResult = safeJSONStringify(circularObj);
+            console.log('✅ Safe JSON stringify succeeded:', safeResult);
+        } catch (error) {
+            console.error('❌ Safe JSON stringify failed:', error);
+        }
+    </script>
+</body>
+</html>

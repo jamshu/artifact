@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "title": "Introduction: Driving License Requirements",
+        "content": "This section outlines the requirements and types of driving licenses in Saudi Arabia.\n\n* Private Driving License: Minimum age 18, valid for 10 years, allows driving small private vehicles.\n* Public Driving License: Minimum age 20, valid for 5 years, divided into categories for taxis, transport vehicles, and buses.\n* Motorcycle License: Allows you to drive motorbikes, minimum age 18.\n* Requirements: Training completion, passing theoretical and practical tests, fee payment."
+    },
+    {
+        "id": 2,
+        "title": "Speed and Its Consequences",
+        "content": "Discusses the importance of speed management for safety.\n\n* Different road users travel at varied speeds.\n* High-speed control requires experience and understanding of stopping distances.\n* Reaction Distance: Distance covered from recognizing danger to starting to brake.\n* Braking Distance: Distance covered after brakes are applied.\n* Stopping Distance = Reaction Distance + Braking Distance."
+    },
+    {
+        "id": 3,
+        "title": "Traffic Accidents",
+        "content": "Analyzes accident types, causes, and responses.\n\n* Major vs. Minor Accidents: Differentiated by severity and financial damage.\n* Legal Liability: Built on negligence, recklessness, or law violations.\n* Emergency Response: Call 911/993, secure accident scenes, contact 'Najm'.\n* Driving Under Influence: Severe penalties including detention periods for serious offenses."
+    }
+]

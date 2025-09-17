@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Geidea Logging Client Test</title>
+</head>
+<body>
+    <h1>Geidea Logging Client Test</h1>
+    <p>Open browser console to see test results...</p>
+    
+    <button onclick="testBasicLogging()">Test Basic Logging</button>
+    <button onclick="testErrorHandling()">Test Error Handling</button>
+    <button onclick="testPromiseRejection()">Test Promise Rejection (Safe)</button>
+    <button onclick="testGeideaConsoleCapture()">Test Geidea Console Capture</button>
+    <button onclick="getSessionInfo()">Get Session Info</button>
+    
+    <script>
+        // Simulate the fixed logging client
+        class TestGeideaLoggingClient {
+            constructor() {
+                this.originalConsole = {
+                    log: console.log.bind(console),
+                    info: console.info.bind(console),
+                    warn: console.warn.bind(console),
+                    error: console.error.bind(console)
+                };
+                
+                this.sessionId = 'test_' + Date.now();
+                this.logQueue = [];
+                this.captureUnhandledPromises = false;
+                
+                console.log('✅ Test Logging Client initialized');
+            }
+            
+            logError(component, message, data = null) {
+                try {
+                    if (this.originalConsole && this.originalConsole.error) {
+                        const safeMessage = message || 'Unknown error';
+                        const safeComponent = component || 'unknown';
+                        
+                        if (data && typeof data === 'object') {
+                            this.originalConsole.error(`[ERROR] ${safeComponent}: ${safeMessage}`, data);
+                        } else {
+                            this.originalConsole.error(`[ERROR] ${safeComponent}: ${safeMessage}`);
+                        }
+                    }
+                } catch (consoleError) {
+                    console.error(`[ERROR] Logging failed: ${message}`);
+                }
+                
+                this.logQueue.push({component, level: 'ERROR', message, data});
+            }
+            
+            logInfo(component, message, data = null) {
+                try {
+                    if (this.originalConsole && this.originalConsole.info) {
+                        this.originalConsole.info(`[INFO] ${component}: ${message}`, data);
+                    }
+                    this.logQueue.push({component, level: 'INFO', message, data});
+                } catch (e) {
+                    console.info(`[INFO] Logging failed: ${message}`);
+                }
+            }
+            
+            logJSError(error, context = {}) {
+                try {
+                    const errorName = (error && error.name) ? error.name : 'UnknownError';
+                    const errorMessage = (error && error.message) ? error.message : 'No error message';
+                    const errorStack = (error && error.stack) ? error.stack : 'No stack trace';
+                    
+                    const errorData = {
+                        error_name: errorName,
+                        error_message: errorMessage,
+                        error_stack: errorStack,
+                        context: context || {}
+                    };
+                    
+                    this.logError('javascript', `JS Error: ${errorMessage}`, errorData);
+                } catch (loggingError) {
+                    if (this.originalConsole && this.originalConsole.error) {
+                        this.originalConsole.error('Failed to log JavaScript error:', error, loggingError);
+                    }
+                }
+            }
+            
+            getSessionInfo() {
+                return {
+                    session_id: this.sessionId,
+                    queue_length: this.logQueue.length,
+                    capture_unhandled_promises: this.captureUnhandledPromises
+                };
+            }
+            
+            setPromiseMonitoring(enabled) {
+                this.captureUnhandledPromises = enabled;
+                this.originalConsole.log(`🔄 Promise rejection monitoring ${enabled ? 'enabled' : 'disabled'}`);
+            }
+        }
+        
+        // Create test client
+        const testClient = new TestGeideaLoggingClient();
+        window.geideaLogger = testClient;
+        
+        // Test functions
+        function testBasicLogging() {
+            console.log('=== Testing Basic Logging ===');
+            testClient.logInfo('test', 'Basic info message');
+            testClient.logError('test', 'Basic error message');
+            console.log('Queue length:', testClient.logQueue.length);
+        }
+        
+        function testErrorHandling() {
+            console.log('=== Testing Error Handling ===');
+            
+            // Test with various error types
+            testClient.logJSError(new Error('Test error'));
+            testClient.logJSError(null); // Should handle null gracefully
+            testClient.logJSError({message: 'Object error'}); // Should handle object
+            testClient.logJSError('String error'); // Should handle string
+        }
+        
+        function testPromiseRejection() {
+            console.log('=== Testing Promise Rejection Handling ===');
+            
+            // Enable promise monitoring for this test
+            testClient.setPromiseMonitoring(true);
+            
+            // Test various rejection types
+            Promise.reject('String rejection').catch(() => {});
+            Promise.reject(new Error('Error object rejection')).catch(() => {});
+            Promise.reject(null).catch(() => {});
+            Promise.reject({message: 'Object rejection'}).catch(() => {});
+            
+            // Disable it again
+            setTimeout(() => {
+                testClient.setPromiseMonitoring(false);
+            }, 1000);
+        }
+        
+        function testGeideaConsoleCapture() {
+            console.log('=== Testing Geidea Console Capture ===');
+            
+            // These should be captured by console overrides
+            console.log('This is a geidea related log message');
+            console.error('This is a geidea related error message');
+            console.warn('This is a geidea related warning message');
+            
+            // These should be ignored
+            console.log('This is a regular log message');
+            console.error('This is a regular error message');
+        }
+        
+        function getSessionInfo() {
+            console.log('=== Session Info ===');
+            console.log(testClient.getSessionInfo());
+        }
+        
+        // Store original console methods
+        const originalConsoleLog = console.log;
+        const originalConsoleError = console.error;
+        const originalConsoleWarn = console.warn;
+        
+        // Simulate console overrides
+        let isLoggingInProgress = false;
+        
+        console.log = function(...args) {
+            originalConsoleLog.apply(console, args);
+            
+            if (!isLoggingInProgress) {
+                try {
+                    const message = args.join(' ');
+                    if (message.toLowerCase().includes('geidea')) {
+                        isLoggingInProgress = true;
+                        testClient.logInfo('console', message, { args: args });
+                    }
+                } catch (e) {
+                    // Silently ignore
+                } finally {
+                    isLoggingInProgress = false;
+                }
+            }
+        };
+        
+        console.error = function(...args) {
+            originalConsoleError.apply(console, args);
+            
+            if (!isLoggingInProgress) {
+                try {
+                    const message = args.join(' ');
+                    if (message.toLowerCase().includes('geidea')) {
+                        isLoggingInProgress = true;
+                        testClient.logError('console', message, { args: args });
+                    }
+                } catch (e) {
+                    // Silently ignore
+                } finally {
+                    isLoggingInProgress = false;
+                }
+            }
+        };
+        
+        console.warn = function(...args) {
+            originalConsoleWarn.apply(console, args);
+            
+            if (!isLoggingInProgress) {
+                try {
+                    const message = args.join(' ');
+                    if (message.toLowerCase().includes('geidea')) {
+                        isLoggingInProgress = true;
+                        testClient.logError('console', message, { args: args });
+                    }
+                } catch (e) {
+                    // Silently ignore
+                } finally {
+                    isLoggingInProgress = false;
+                }
+            }
+        };
+        
+        console.log('✅ Test environment ready. Use the buttons above to test different scenarios.');
+    </script>
+</body>
+</html>

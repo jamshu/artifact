@@ -1,0 +1,37 @@
+[
+    {
+        "section_id": 5,
+        "question": "Under what circumstances is overtaking prohibited, even if speed limits are respected?",
+        "options": ["When driving on a straight road with clear visibility", "At intersections and railway lanes", "When the vehicle in front is moving slowly", "On multi-lane roads"],
+        "answer": 1,
+        "explanation": "The sources explicitly list 'At intersections and railway lanes' and 'At pedestrian crossings' as places where overtaking is prohibited."
+    },
+    {
+        "section_id": 5,
+        "question": "What is the recommended following distance behind another vehicle?",
+        "options": ["1 second", "2 seconds", "5 seconds", "10 seconds"],
+        "answer": 1,
+        "explanation": "The two-second rule helps ensure you have enough time to stop safely if the vehicle ahead suddenly stops."
+    },
+    {
+        "section_id": 5,
+        "question": "When changing lanes, what is the most important safety check?",
+        "options": ["Check mirrors and blind spots", "Honk the horn", "Speed up", "Turn on radio"],
+        "answer": 0,
+        "explanation": "Before changing lanes, you must check your mirrors and blind spots to ensure no vehicles are in your path."
+    },
+    {
+        "section_id": 6,
+        "question": "What is the penalty for exceeding the speed limit by more than 50 km/h when the speed limit on the road is 120 km/h or less?",
+        "options": ["A fine of (300-500) riyals", "A fine of (800-1,000) riyals", "A fine of (1,200-1,500) riyals", "A fine of (1,500-2,000) riyals"],
+        "answer": 3,
+        "explanation": "Violations table specifies that for speed limits of 120 km/h or less, exceeding speed by more than 50 km/h incurs a fine of (1,500-2,000) riyals."
+    },
+    {
+        "section_id": 6,
+        "question": "How many points recorded against a driver in one Hijri year lead to the withdrawal of their license for the first time?",
+        "options": ["12 points", "18 points", "24 points", "30 points"],
+        "answer": 2,
+        "explanation": "The procedure for withdrawing a license is applied if the number of points recorded in the violating driver's record reaches 24 points within one Hijri year."
+    }
+]

@@ -1,0 +1,37 @@
+[
+    {
+        "section_id": 3,
+        "question": "What is the shape and color of a standard warning sign?",
+        "options": ["Circular with a blue background", "Octagonal and red", "Rectangular and green", "Triangular with a red border"],
+        "answer": 3,
+        "explanation": "Warning signs are triangular with a white background and a red border to alert drivers of potential hazards ahead."
+    },
+    {
+        "section_id": 3,
+        "question": "What does a blue circular sign typically indicate?",
+        "options": ["Warning of hazard", "Prohibition", "Mandatory action", "Information"],
+        "answer": 2,
+        "explanation": "Blue circular signs indicate mandatory actions that drivers must follow."
+    },
+    {
+        "section_id": 3,
+        "question": "What color are guide signs for highway directions?",
+        "options": ["Red", "Blue", "Green", "Yellow"],
+        "answer": 2,
+        "explanation": "Green guide signs provide highway directional information."
+    },
+    {
+        "section_id": 4,
+        "question": "At an intersection with a flashing yellow light, what should a driver do?",
+        "options": ["Stop completely before proceeding", "Proceed with caution, yielding to pedestrians and other traffic", "Treat it as a green light and continue at speed", "The light is broken, find another route"],
+        "answer": 1,
+        "explanation": "A flashing yellow light means proceed with caution. You have priority, but must be aware of other potential hazards."
+    },
+    {
+        "section_id": 4,
+        "question": "Who has the right-of-way at an uncontrolled intersection?",
+        "options": ["The vehicle on the left", "The larger vehicle", "The vehicle on the right", "The faster vehicle"],
+        "answer": 2,
+        "explanation": "According to the 'Right Before Left Rule', the vehicle on the right has the right-of-way at equal intersections."
+    }
+]
