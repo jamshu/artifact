@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Compressed File</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 4em;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .file-details {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .detail-value {
+            color: #666;
+            text-align: right;
+            word-break: break-all;
+            max-width: 60%;
+        }
+
+        .size-badge {
+            background: #4CAF50;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .tips {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .tips h3 {
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .tip {
+            margin: 8px 0;
+            color: #856404;
+            font-size: 0.95em;
+        }
+
+        .tip-icon {
+            color: #ff9f43;
+            margin-right: 8px;
+        }
+
+        .alerts {
+            margin: 20px 0;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            color: #999;
+            font-size: 0.9em;
+        }
+
+        .auto-download {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 10px;
+            color: #1565c0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">🎉</div>
+        <h1>File Compressed Successfully!</h1>
+        <p class="subtitle">Your file has been processed and is ready for download</p>
+
+        <div class="alerts">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <div class="file-details">
+            <div class="detail-row">
+                <span class="detail-label">📁 File Name:</span>
+                <span class="detail-value">{{ filename }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">📏 File Size:</span>
+                <span class="detail-value">
+                    <span class="size-badge">{{ filesize }} KB</span>
+                </span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">✅ Status:</span>
+                <span class="detail-value" style="color: #4CAF50; font-weight: bold;">
+                    {% if filesize|float <= 3.6 %}
+                        Ready for Upload
+                    {% else %}
+                        Compressed (May need further compression)
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+        <div class="auto-download">
+            💡 <strong>Auto-download starting in <span id="countdown">5</span> seconds...</strong>
+            <br><small>Click download button if it doesn't start automatically</small>
+        </div>
+
+        <div>
+            <a href="/download/{{ filepath }}" class="btn" id="downloadBtn">
+                ⬇️ Download Compressed File
+            </a>
+        </div>
+
+        <div>
+            <a href="/" class="btn btn-secondary">
+                🔄 Compress Another File
+            </a>
+        </div>
+
+        <div class="tips">
+            <h3>💡 Tips for Bank Upload:</h3>
+            <div class="tip">
+                <span class="tip-icon">•</span>
+                File is optimized for bank document requirements
+            </div>
+            <div class="tip">
+                <span class="tip-icon">•</span>
+                Size is under 3.6 KB limit for most banking systems
+            </div>
+            <div class="tip">
+                <span class="tip-icon">•</span>
+                Quality is maintained for signature readability
+            </div>
+            <div class="tip">
+                <span class="tip-icon">•</span>
+                Test upload a small file first to verify acceptance
+            </div>
+        </div>
+
+        <div class="footer">
+            File will be automatically deleted after 1 hour for security<br>
+            <small>Optimized for bank document requirements</small>
+        </div>
+    </div>
+
+    <script>
+        // Auto-download functionality
+        let countdown = 5;
+        const countdownElement = document.getElementById('countdown');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            countdownElement.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                // Trigger download
+                downloadBtn.click();
+                
+                // Update the auto-download message
+                document.querySelector('.auto-download').innerHTML = 
+                    '✅ <strong>Download started!</strong><br><small>If download didn\'t start, click the download button above</small>';
+            }
+        }, 1000);
+
+        // Track download clicks
+        downloadBtn.addEventListener('click', function() {
+            this.textContent = '⬇️ Downloading...';
+            setTimeout(() => {
+                this.textContent = '✅ Downloaded';
+                this.style.background = 'linear-gradient(45deg, #4CAF50, #45a049)';
+            }, 1000);
+        });
+
+        // Prevent multiple clicks
+        downloadBtn.addEventListener('click', function() {
+            setTimeout(() => {
+                this.style.pointerEvents = 'none';
+                this.style.opacity = '0.7';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
