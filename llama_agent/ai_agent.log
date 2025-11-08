@@ -30,3 +30,5 @@
 2025-09-14 14:50:11,378 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
 2025-09-14 14:50:11,710 - INFO - HTTP Request: POST http://localhost:11434/api/generate "HTTP/1.1 200 OK"
 2025-09-14 14:54:07,352 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-06 13:27:11,724 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.
+2025-11-06 13:28:01,922 - INFO - Anonymized telemetry enabled. See                     https://docs.trychroma.com/telemetry for more information.

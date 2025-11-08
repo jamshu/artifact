@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inv_cost_analysis_report_action" model="ir.actions.report">
+        <field name="name">Cost Analysis</field>
+        <field name="model">stock.adjustment.barcode</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">stock_adjustment_barcode.inv_cost_analysis_report</field>
+        <field name="report_file">stock_adjustment_barcode.inv_cost_analysis_report</field>
+        <field name="print_report_name">'Stock Valuation Variation Report - %s ' % object.name</field>
+        <field name="binding_model_id" ref="stock_adjustment_barcode.model_stock_adjustment_barcode"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('base_product_cost_security.group_product_cost_security'))]"/>
+    </record>
+
+     <record id="stock_variation_report_action" model="ir.actions.report">
+        <field name="name">Stock Variation Report</field>
+        <field name="model">stock.adjustment.barcode</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">stock_adjustment_barcode.stock_variation_report</field>
+        <field name="report_file">stock_adjustment_barcode.stock_variation_report</field>
+        <field name="print_report_name">'Stock Variation Report - %s ' % object.name</field>
+        <field name="binding_model_id" ref="stock_adjustment_barcode.model_stock_adjustment_barcode"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

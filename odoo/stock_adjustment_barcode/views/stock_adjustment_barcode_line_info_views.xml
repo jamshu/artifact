@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="stock_adjustment_barcode_line_info_tree_view" model="ir.ui.view">
+        <field name="name">stock.adjustment.barcode.line.info.tree.view</field>
+        <field name="model">stock.adjustment.barcode.line.info</field>
+        <field name="arch" type="xml">
+            <tree editable="top" create="0" edit="0" delete="0">
+                <field name="inv_adjustment_id" invisible="1"/>
+                <field name="disallowed_product_ids" invisible="1"/>
+                <field name="product_id"/>
+                <field name="lot_id" optional="hide"/>
+                <field name="product_uom_id"/>
+                <field name="scanned_qty"/>
+                <field name="scanned_user_id"/>
+                <field name="create_uid" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="stock_adjustment_barcode_line_info_action" model="ir.actions.act_window">
+        <field name="name">Stock Adjustment Barcode Line Info</field>
+        <field name="res_model">stock.adjustment.barcode.line.info</field>
+        <field name="view_mode">tree</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="stock_adjustment_barcode_line_info_tree_view"/>
+    </record>
+
+</odoo>

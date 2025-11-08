@@ -1,0 +1,42 @@
+/* Stock Adjustment Barcode Parent-Child Styling */
+
+.o_list_view .o_data_row.decoration-success {
+    background-color: #d4edda !important;
+    border-left: 4px solid #28a745 !important;
+}
+
+.o_list_view .o_data_row.decoration-muted {
+    background-color: #f8f9fa !important;
+    color: #6c757d !important;
+    font-style: italic;
+    padding-left: 20px;
+}
+
+.o_list_view .o_data_row .o_field_char[name="display_name_with_relation"] {
+    font-weight: normal;
+}
+
+.o_list_view .o_data_row.decoration-bf .o_field_char[name="display_name_with_relation"] {
+    font-weight: bold !important;
+    color: #28a745 !important;
+}
+
+.o_list_view .o_data_row.decoration-muted .o_field_char[name="display_name_with_relation"] {
+    font-style: italic;
+    color: #6c757d !important;
+}
+
+/* Section-like display for parent products */
+.parent-product-section {
+    background-color: #e9ecef;
+    padding: 8px;
+    margin: 4px 0;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.child-product-item {
+    padding-left: 20px;
+    background-color: #f8f9fa;
+    font-style: italic;
+}

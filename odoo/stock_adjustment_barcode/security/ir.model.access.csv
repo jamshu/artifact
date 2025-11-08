@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_adjustment_barcode,access.stock.adjustment.barcode,model_stock_adjustment_barcode,,1,1,1,1
+access_stock_adjustment_barcode_line,access.stock.adjustment.barcode.line,model_stock_adjustment_barcode_line,,1,1,1,1
+access_stock_adjustment_barcode_lot_line,access.stock.adjustment.barcode.lot.line,model_stock_adjustment_barcode_lot_line,,1,1,1,1
+access_stock_adjustment_barcode_line_info,access.stock.adjustment.barcode.line.info,model_stock_adjustment_barcode_line_info,,1,1,1,1

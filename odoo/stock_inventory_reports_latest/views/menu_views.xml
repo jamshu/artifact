@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <!-- Inventory Reports Dashboard Menu -->
+    <menuitem id="menu_inventory_reports_dashboard"
+              name="Inventory Reports"
+              parent="stock.menu_warehouse_report"
+              action="action_inventory_report_dashboard"
+              sequence="1500"/>
+<!--     <menuitem id="menu_scrap_reports"-->
+<!--              name="Scrap Reports"-->
+<!--              parent="stock.menu_warehouse_report"-->
+<!--              action="action_scrap_report_wizard"-->
+<!--              sequence="901"/>-->
+<!--    <menuitem id="menu_customer_return_reports"-->
+<!--              name="Return Reports"-->
+<!--              parent="stock.menu_warehouse_report"-->
+<!--              action="action_return_report_wizard"-->
+<!--              sequence="901"/>-->
+
+
+</odoo>

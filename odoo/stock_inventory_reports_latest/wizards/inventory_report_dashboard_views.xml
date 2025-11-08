@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inventory Report Dashboard Form View - Enhanced & Beautiful -->
+    <record id="view_inventory_report_dashboard_form" model="ir.ui.view">
+        <field name="name">inventory.report.dashboard.form</field>
+        <field name="model">inventory.report.dashboard</field>
+        <field name="arch" type="xml">
+            <form string="Inventory Reports Dashboard">
+                <style>
+                    .dashboard-header {
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        padding: 40px 30px;
+                        border-radius: 10px;
+                        margin-bottom: 30px;
+                        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+                        text-align: center;
+                    }
+
+                    .dashboard-header h1 {
+                        font-size: 32px;
+                        font-weight: 700;
+                        margin: 0;
+                        letter-spacing: 0.5px;
+                    }
+
+                    .dashboard-subtitle {
+                        font-size: 14px;
+                        opacity: 0.9;
+                        margin-top: 10px;
+                        font-weight: 300;
+                    }
+
+                    .reports-container {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                        gap: 25px;
+                        margin-top: 20px;
+                    }
+
+                    .report-card {
+                        background: white;
+                        border-radius: 12px;
+                        padding: 30px;
+                        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+                        transition: all 0.3s ease;
+                        border: 1px solid #f0f0f0;
+                        position: relative;
+                        overflow: hidden;
+                    }
+
+                    .report-card::before {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        height: 4px;
+                        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+                    }
+
+                    .report-card:hover {
+                        transform: translateY(-8px);
+                        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+                    }
+
+                    .card-icon {
+                        font-size: 48px;
+                        margin-bottom: 15px;
+                        height: 80px;
+                        width: 80px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 12px;
+                        margin-bottom: 20px;
+                    }
+
+                    .card-icon-scrap {
+                        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                        color: white;
+                    }
+
+                    .card-icon-return {
+                        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+                        color: white;
+                    }
+
+                    .card-title {
+                        font-size: 20px;
+                        font-weight: 700;
+                        color: #2d3748;
+                        margin-bottom: 10px;
+                    }
+
+                    .card-description {
+                        font-size: 13px;
+                        color: #718096;
+                        margin-bottom: 25px;
+                        line-height: 1.6;
+                    }
+
+                    .btn-report {
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        border: none;
+                        padding: 12px 28px;
+                        border-radius: 8px;
+                        font-weight: 600;
+                        font-size: 14px;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        width: 100%;
+                        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+                    }
+
+                    .btn-report:hover {
+                        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+                        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+                        transform: scale(1.02);
+                    }
+
+                    .oe_form {
+                        background: #f8f9fa;
+                    }
+
+                    .features-list {
+                        display: flex;
+                        gap: 15px;
+                        margin-top: 15px;
+                        flex-wrap: wrap;
+                    }
+
+                    .feature-badge {
+                        background: #f0f0f0;
+                        padding: 6px 12px;
+                        border-radius: 20px;
+                        font-size: 11px;
+                        color: #666;
+                        font-weight: 500;
+                    }
+                </style>
+
+                <sheet class="o_form_sheet">
+                    <!-- Header Section -->
+                    <div class="dashboard-header">
+                        <h1>📊 Inventory Reports Dashboard</h1>
+                        <div class="dashboard-subtitle">Generate and analyze your inventory data with ease</div>
+                    </div>
+
+                    <!-- Reports Container -->
+                    <div class="reports-container">
+                        <!-- Scrap Report Card -->
+
+                            <button name="action_open_scrap_report"
+                                    type="object"
+                                    class="btn-report"
+                                    groups="stock.group_stock_manager"
+                                    onclick="return true">
+                                <i class="fa fa-arrow-right"></i> View Scrap Report
+                            </button>
+
+                            <button name="action_open_return_report"
+                                    type="object"
+                                    class="btn-report"
+                                    groups="stock.group_stock_manager"
+                                    onclick="return true">
+                                <i class="fa fa-arrow-right"></i> View Return Report
+                            </button>
+
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Inventory Report Dashboard Action -->
+    <record id="action_inventory_report_dashboard" model="ir.actions.act_window">
+        <field name="name">Inventory Reports</field>
+        <field name="res_model">inventory.report.dashboard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+    </record>
+
+</odoo>

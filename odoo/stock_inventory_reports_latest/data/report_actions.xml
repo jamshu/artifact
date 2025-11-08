@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <!-- Scrap Report Action -->
+        <record id="action_scrap_report_xlsx" model="ir.actions.report">
+            <field name="name">Scrap Report XLSX</field>
+            <field name="model">scrap.report.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">stock_inventory_reports.scrap_report_xlsx</field>
+            <field name="report_file">stock_inventory_reports.scrap_report_xlsx</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Return Report Action -->
+        <record id="action_return_report_xlsx" model="ir.actions.report">
+            <field name="name">Return Report XLSX</field>
+            <field name="model">return.report.wizard</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">stock_inventory_reports.return_report_xlsx</field>
+            <field name="report_file">stock_inventory_reports.return_report_xlsx</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

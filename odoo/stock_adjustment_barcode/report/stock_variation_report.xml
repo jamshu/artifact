@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="stock_variation_report" >
+        <t t-call="web.basic_layout">
+            <t t-call="web.html_container"/>
+            <t t-call-assets="stock_adjustment_barcode.assets_cost_analysis" t-js="false"/>
+            <div class="page o_analysis_report_page">
+                <span class="text-start">
+                    <h1 class="o_analysis_header o_analysis_header1">Stock Variation Report</h1>
+                </span>
+                <h3 class="o_analysis_header o_analysis_table_header">Valuation Deatils</h3>
+                <table class="table table-sm o_analysis_report_table">
+                    <thead>
+                        <tr class="o_analysis_report_header">
+                            <th><span>Product</span></th>
+                            <th class="text-end"><span>On Hand Qty</span></th>
+                            <th class="text-end"><span>Counted Qty</span></th>
+                            <th class="text-end"><span>Difference</span></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-set="total_valuation_difference" t-value="0.0"/>
+                        <tr t-foreach="lines" t-as="line" class="text-muted">
+                            <t t-set="standard_price" t-value="line.unit_price"/>
+                            <t t-set="valuation_difference" t-value="line.difference_qty * standard_price"/>
+                            <t t-set="total_valuation_difference" t-value="total_valuation_difference + valuation_difference"/>
+                            <td class="o_product">
+                                <span class="o_analysis_report_web_action" t-esc="line.product_id.display_name"
+                                    view-type="form" t-att-res-id="line.product_id.id" res-model="product.product"/>
+                            </td>
+                            <td class="text-end o_on_hand_qty">
+                                <span t-esc="line.on_hand_qty" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/>
+                                <span t-esc="line.product_uom_id.name"/>
+                            </td>
+                            <td class="text-end o_counted_qty">
+                                <span t-esc="line.total_scanned_qty" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/>
+                                <span t-esc="line.product_uom_id.name"/>
+                            </td>
+                            <td class="text-end o_difference">
+                                <span t-esc="line.difference_qty" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+                
+
+
+            </div>
+        </t>
+    </template>
+</odoo>

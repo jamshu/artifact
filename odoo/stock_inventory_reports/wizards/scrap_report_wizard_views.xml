@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Scrap Report Wizard Form View - Enhanced & Beautiful -->
+    <record id="view_scrap_report_wizard_form" model="ir.ui.view">
+        <field name="name">scrap.report.wizard.form</field>
+        <field name="model">scrap.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Scrap Report">
+                <style>
+                    .wizard-header {
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        padding: 15px 20px;
+                        border-radius: 8px;
+                        margin-bottom: 12px;
+                        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+                        text-align: center;
+                    }
+
+                    .wizard-header h2 {
+                        font-size: 18px;
+                        font-weight: 700;
+                        margin: 0;
+                        letter-spacing: 0.3px;
+                    }
+
+                    .oe_form {
+                        background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+                    }
+
+                    .form-section {
+                        background: white;
+                        border-radius: 8px;
+                        padding: 12px 15px;
+                        margin-bottom: 10px;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+                        border-left: 4px solid #667eea;
+                        border: 1px solid #f0f0f0;
+                        border-left: 4px solid #667eea;
+                        transition: all 0.3s ease;
+                    }
+
+                    .form-section:hover {
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .section-header {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 10px;
+                        padding-bottom: 8px;
+                        border-bottom: 1px solid #f0f0f0;
+                    }
+
+                    .section-icon {
+                        font-size: 16px;
+                        margin-right: 8px;
+                        width: 28px;
+                        height: 28px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 6px;
+                        color: white;
+                    }
+
+                    .icon-date {
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    }
+
+                    .icon-warehouse {
+                        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                    }
+
+                    .icon-operation {
+                        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+                    }
+
+                    .icon-product {
+                        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+                    }
+
+                    .section-title {
+                        font-size: 13px;
+                        font-weight: 700;
+                        color: #2d3748;
+                    }
+
+                    .field-row {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 10px;
+                        margin-bottom: 10px;
+                    }
+
+                    .field-row.full {
+                        grid-template-columns: 1fr;
+                    }
+
+                    .section-row {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 10px;
+                        margin-bottom: 10px;
+                    }
+
+                    @media (max-width: 768px) {
+                        .section-row {
+                            grid-template-columns: 1fr;
+                        }
+                    }
+
+                    .field-wrapper {
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    .field-label {
+                        font-size: 11px;
+                        font-weight: 700;
+                        color: #4a5568;
+                        margin-bottom: 4px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.3px;
+                    }
+
+                    .o_field_widget {
+                        background: #f8f9fa;
+                        border-radius: 6px;
+                        border: 1px solid #e2e8f0;
+                        padding: 6px 8px;
+                        font-size: 12px;
+                        transition: all 0.3s ease;
+                    }
+
+                    .o_field_widget:focus-within {
+                        background: white;
+                        border-color: #667eea;
+                        box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+                    }
+
+                    .o_field_tags {
+                        background: #f8f9fa;
+                        border-radius: 6px;
+                        border: 1px solid #e2e8f0;
+                        padding: 6px;
+                        min-height: 28px;
+                        max-height: 70px;
+                        overflow-y: auto;
+                    }
+
+                    /* Enhanced Tag Styles for Better Readability */
+                    .o_tag {
+                        background: #667eea !important;
+                        color: #ffffff !important;
+                        border-radius: 12px;
+                        padding: 5px 12px;
+                        font-size: 11px;
+                        font-weight: 600;
+                        margin: 2px;
+                        white-space: nowrap;
+                        box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+                        border: 1px solid rgba(255, 255, 255, 0.2);
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 4px;
+                    }
+
+                    .o_tag:hover {
+                        background: #764ba2 !important;
+                        box-shadow: 0 3px 6px rgba(118, 75, 162, 0.3);
+                    }
+
+                    /* Tag text and badge styling */
+                    .o_tag .o_badge_text,
+                    .o_tag span {
+                        color: #ffffff !important;
+                        font-weight: 600;
+                        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .o_tag_badge_span {
+                        font-size: 11px;
+                        color: #ffffff !important;
+                    }
+
+                    /* Delete button in tags */
+                    .o_tag .o_delete,
+                    .o_tag .o_badge_remove {
+                        color: #ffffff !important;
+                        opacity: 0.9;
+                        font-weight: bold;
+                        margin-left: 4px;
+                        cursor: pointer;
+                        transition: opacity 0.2s;
+                    }
+
+                    .o_tag .o_delete:hover,
+                    .o_tag .o_badge_remove:hover {
+                        opacity: 1;
+                        color: #fff !important;
+                    }
+
+                    /* Alternative: Light theme tags (uncomment if you prefer lighter tags) */
+                    /*
+                    .o_tag {
+                        background: linear-gradient(135deg, #e0e7ff 0%, #f3e8ff 100%) !important;
+                        color: #5b21b6 !important;
+                        border: 1px solid #c7d2fe;
+                    }
+
+                    .o_tag .o_badge_text,
+                    .o_tag span,
+                    .o_tag_badge_span {
+                        color: #5b21b6 !important;
+                    }
+
+                    .o_tag .o_delete,
+                    .o_tag .o_badge_remove {
+                        color: #7c3aed !important;
+                    }
+                    */
+
+                    .footer-wrapper {
+                        background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+                        padding: 10px 12px;
+                        border-radius: 8px;
+                        display: flex;
+                        gap: 8px;
+                        justify-content: flex-end;
+                        margin-top: 10px;
+                        border: 1px solid #e2e8f0;
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+                    }
+
+                    .btn-generate {
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        border: none;
+                        padding: 8px 18px;
+                        border-radius: 6px;
+                        font-weight: 700;
+                        font-size: 12px;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+                        display: flex;
+                        align-items: center;
+                        gap: 5px;
+                    }
+
+                    .btn-generate:hover {
+                        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+                        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.5);
+                        transform: translateY(-1px);
+                    }
+
+                    .btn-cancel {
+                        background: #f0f0f0;
+                        color: #2d3748;
+                        border: 1px solid #e2e8f0;
+                        padding: 8px 18px;
+                        border-radius: 6px;
+                        font-weight: 600;
+                        font-size: 12px;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    }
+
+                    .btn-cancel:hover {
+                        background: #e2e8f0;
+                        border-color: #cbd5e0;
+                        transform: translateY(-1px);
+                    }
+                </style>
+
+                <sheet class="o_form_sheet">
+                    <!-- Header Section -->
+                    <div class="wizard-header">
+                        <h2>📊 Scrap Report Generator</h2>
+                    </div>
+
+                    <!-- Date Range Section -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <div class="section-icon icon-date">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                            <div class="section-title">Date Range</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-wrapper">
+                                <span class="field-label">From Date</span>
+                                <field name="date_from" required="1" nolabel="1"/>
+                            </div>
+                            <div class="field-wrapper">
+                                <span class="field-label">To Date</span>
+                                <field name="date_to" required="1" nolabel="1"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 1: Warehouse & Operation Type -->
+                    <div class="section-row">
+                        <!-- Warehouse &amp; Location Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon icon-warehouse">
+                                    <i class="fa fa-warehouse"></i>
+                                </div>
+                                <div class="section-title">Warehouse &amp; Location</div>
+                            </div>
+                            <div class="field-wrapper">
+                                <span class="field-label">Warehouses *</span>
+                                <field name="warehouse_ids" widget="many2many_tags" required="1" nolabel="1"/>
+                            </div>
+                            <div class="field-wrapper" style="margin-top: 8px;">
+                                <field name="location_ids_domain" invisible="1"/>
+                                <span class="field-label">Scrap Locations</span>
+                                <field name="location_ids" widget="many2many_tags" nolabel="1"
+                                       domain="location_ids_domain"/>
+                            </div>
+                        </div>
+
+                        <!-- Operation Type Section -->
+                        <div class="form-section">
+                            <div class="section-header">
+                                <div class="section-icon icon-operation">
+                                    <i class="fa fa-cogs"></i>
+                                </div>
+                                <div class="section-title">Operation Type</div>
+                            </div>
+                            <div class="field-wrapper">
+                                <field name="operation_type_ids_domain" invisible="1"/>
+                                <span class="field-label">Scrap Operation Types</span>
+                                <field name="operation_type_ids" widget="many2many_tags" nolabel="1"
+                                       domain="operation_type_ids_domain"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Filters Section -->
+                    <div class="form-section">
+                        <div class="section-header">
+                            <div class="section-icon icon-product">
+                                <i class="fa fa-box"></i>
+                            </div>
+                            <div class="section-title">Product Filters</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-wrapper">
+                                <span class="field-label">Categories</span>
+                                <field name="category_ids" widget="many2many_tags" nolabel="1"/>
+                            </div>
+                            <div class="field-wrapper">
+                                <field name="product_ids_domain" invisible="1"/>
+                                <span class="field-label">Products</span>
+                                <field name="product_ids" widget="many2many_tags" nolabel="1"
+                                       options="{'no_create': True}"
+                                       domain="product_ids_domain"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-section">
+                    <button name="action_generate_report"
+                            string="Generate Report"
+                            type="object"
+                            class="btn-generate">
+                        <i class="fa fa-file-pdf-o"></i>Generate
+                    </button>
+
+
+                </div>
+                </sheet>
+
+
+               <!-- Footer Section -->
+
+            </form>
+        </field>
+    </record>
+
+    <!-- Scrap Report Wizard Action -->
+    <record id="action_scrap_report_wizard" model="ir.actions.act_window">
+        <field name="name">Scrap Report</field>
+        <field name="res_model">scrap.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

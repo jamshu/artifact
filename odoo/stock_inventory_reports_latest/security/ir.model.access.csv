@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_base_date_range_wizard_user,base.date.range.wizard user,model_base_date_range_wizard,stock.group_stock_user,1,1,1,1
+access_base_excel_report_wizard_user,base.excel.report.wizard user,model_base_excel_report_wizard,stock.group_stock_user,1,1,1,1
+access_base_warehouse_wizard_user,base.warehouse.wizard user,model_base_warehouse_wizard,stock.group_stock_user,1,1,1,1
+access_base_location_wizard_user,base.location.wizard user,model_base_location_wizard,stock.group_stock_user,1,1,1,1
+access_base_operation_type_wizard_user,base.operation.type.wizard user,model_base_operation_type_wizard,stock.group_stock_user,1,1,1,1
+access_inventory_report_dashboard_user,inventory.report.dashboard user,model_inventory_report_dashboard,stock.group_stock_user,1,1,1,1
+access_scrap_report_wizard_user,scrap.report.wizard user,model_scrap_report_wizard,stock.group_stock_user,1,1,1,1
+access_return_report_wizard_user,return.report.wizard user,model_return_report_wizard,stock.group_stock_user,1,1,1,1
+access_inventory_report_dashboard_manager,inventory.report.dashboard manager,model_inventory_report_dashboard,stock.group_stock_manager,1,1,1,1
+access_scrap_report_wizard_manager,scrap.report.wizard manager,model_scrap_report_wizard,stock.group_stock_manager,1,1,1,1
+access_return_report_wizard_manager,return.report.wizard manager,model_return_report_wizard,stock.group_stock_manager,1,1,1,1
